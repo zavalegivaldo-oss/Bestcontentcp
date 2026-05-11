@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BEST CONTENT</title>
+<meta name="description" content="Choose the folder you want📂✅️Below are  several foders choose" />
+<style>
+  :root {
+    --background: oklch(0.13 0.01 20);
+    --foreground: oklch(0.98 0 0);
+    --card: oklch(0.17 0.012 20);
+    --surface: oklch(0.17 0.012 20);
+    --primary: oklch(0.62 0.22 25);
+    --primary-foreground: oklch(0.99 0 0);
+    --muted-foreground: oklch(0.7 0.01 20);
+    --border: oklch(1 1 1 / 8%);
+    --shadow-card: 0 4px 24px -8px oklch(0 0 0 / 50%);
+    --shadow-glow: 0 10px 40px -10px oklch(0.62 0.22 25 / 45%);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--background); color: var(--foreground); }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; min-height: 100vh; }
+  a { text-decoration: none; color: inherit; }
+
+  header { position: relative; padding: 24px 16px 16px; }
+  .flags { position: absolute; right: 16px; top: 16px; display: flex; gap: 4px; align-items: center; padding: 4px 6px; border-radius: 9999px; border: 1px solid color-mix(in oklab, var(--primary) 40%, transparent); background: var(--card); font-size: 16px; }
+  .flag-btn { background: none; border: 0; cursor: pointer; padding: 0 6px; line-height: 1; border-radius: 9999px; opacity: 0.6; transition: opacity .15s, background .15s; font-size: 16px; }
+  .flag-btn:hover { opacity: 1; }
+  .flag-btn.active { opacity: 1; background: color-mix(in oklab, var(--primary) 20%, transparent); box-shadow: 0 0 0 1px var(--primary) inset; }
+  h1.store-title { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0; font-size: 24px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; color: var(--primary); }
+  .sparkle { width: 20px; height: 20px; }
+  .store-desc { margin: 8px 0 0; text-align: center; font-size: 14px; color: var(--muted-foreground); }
+
+  main { max-width: 672px; margin: 0 auto; padding: 0 16px 40px; display: flex; flex-direction: column; gap: 20px; }
+
+  .card { background: var(--card); border-radius: 16px; padding: 12px; box-shadow: var(--shadow-card); overflow: hidden; }
+  .media-wrap { position: relative; overflow: hidden; border-radius: 12px; }
+  .media { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #000; }
+  .media.empty { display: flex; align-items: center; justify-content: center; color: var(--muted-foreground); background: var(--surface); }
+  .badge-video { position: absolute; right: 12px; top: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 9999px; background: var(--primary); color: var(--primary-foreground); font-size: 12px; font-weight: 700; }
+
+  .player { position: relative; }
+  .poster-wrap { position: relative; }
+  .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); border: 0; cursor: pointer; transition: background .15s; }
+  .play-overlay:hover { background: rgba(0,0,0,0.35); }
+  .play-btn { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 9999px; background: #dc2626; box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 4px rgba(255,255,255,0.3); transition: transform .15s; }
+  .play-overlay:hover .play-btn { transform: scale(1.08); }
+  .play-overlay:active .play-btn { transform: scale(0.95); }
+
+  .row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 0 4px; margin-top: 16px; }
+  .title { margin: 0; font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; }
+  .price-col { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; }
+  .old { font-size: 12px; color: var(--muted-foreground); text-decoration: line-through; }
+  .now { font-size: 24px; font-weight: 800; color: var(--primary); line-height: 1.1; }
+  .discount { margin-top: 2px; padding: 1px 8px; border-radius: 9999px; background: var(--primary); color: var(--primary-foreground); font-size: 10px; font-weight: 700; }
+
+  .counters { display: flex; gap: 20px; padding: 0 4px; margin-top: 12px; font-size: 14px; color: var(--muted-foreground); }
+  .counter { display: inline-flex; align-items: center; gap: 6px; }
+
+  .infos { list-style: none; padding: 0 4px; margin: 12px 0 0; display: flex; flex-direction: column; gap: 4px; }
+  .infos li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; }
+  .check { color: var(--primary); }
+
+  .desc { margin: 8px 0 0; padding: 0 4px; font-size: 14px; color: var(--muted-foreground); }
+
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .btn.tg { border: 1px solid color-mix(in oklab, var(--primary) 60%, transparent); background: var(--background); color: var(--foreground); }
+  .btn.tg:hover { background: color-mix(in oklab, var(--primary) 10%, transparent); }
+  .btn.buy { background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-glow); }
+  .btn.buy:hover { background: color-mix(in oklab, var(--primary) 90%, black); }
+
+  .empty-state { padding: 48px 0; text-align: center; color: var(--muted-foreground); }
+  .powered { padding-top: 24px; text-align: center; font-size: 12px; color: var(--muted-foreground); }
+  .powered a { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="flags">
+      <button class="flag-btn" data-lang="pt" aria-label="Português" title="Português">🇧🇷</button>
+      <button class="flag-btn" data-lang="en" aria-label="English" title="English">🇺🇸</button>
+      <button class="flag-btn" data-lang="de" aria-label="Deutsch" title="Deutsch">🇩🇪</button>
+    </div>
+    <h1 class="store-title">
+      <svg class="sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/></svg>
+      BEST CONTENT
+      <svg class="sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/></svg>
+    </h1>
+    <p class="store-desc">Choose the folder you want📂✅️Below are  several foders choose</p>
+  </header>
+  <main>
+    
+    <article class="card">
+      <div class="media-wrap">
+        <span class="badge-video">▶ <span data-i18n="video">Vídeo</span></span>
+        
+          <div class="player" data-player="0">
+            <div class="poster-wrap">
+              <video src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778510560086-0e0w6.mp4" preload="metadata" muted playsinline class="media preview-vid"></video>
+              <button class="play-overlay" type="button" aria-label="Reproduzir vídeo" data-i18n-aria="play">
+                <span class="play-btn"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
+              </button>
+            </div>
+            <video class="real-vid media" src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778510560086-0e0w6.mp4"  controls playsinline style="display:none"></video>
+          </div>
+      </div>
+      <div class="row">
+        <h2 class="title">🔥 Highschool</h2>
+        <div class="price-col">
+          
+          <span class="now">$35</span>
+          
+        </div>
+      </div>
+      <div class="counters">
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 965</span>
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> 865</span>
+      </div>
+      
+      <p class="desc">✅Snapchat hacking tools ✅Complete folder ✅ More than 100 vids ✅More than 2GB</p>
+      <div class="actions"><a class="btn tg" href="https://t.me/Franceselle" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> <span data-i18n="telegram">Telegram</span></a><a class="btn buy" href="https://t.me/Franceselle" target="_blank" rel="noreferrer" data-buy-base="https://t.me/Franceselle" data-title="Highschool" data-price="35"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span data-i18n="buy">Comprar agora</span></a></div>
+    </article>
+
+    <article class="card">
+      <div class="media-wrap">
+        <span class="badge-video">▶ <span data-i18n="video">Vídeo</span></span>
+        
+          <div class="player" data-player="1">
+            <div class="poster-wrap">
+              <img src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778506340392-z4l2r.jpg" alt="‼️SNAPGOD FULL EDITON‼️" class="media" />
+              <button class="play-overlay" type="button" aria-label="Reproduzir vídeo" data-i18n-aria="play">
+                <span class="play-btn"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
+              </button>
+            </div>
+            <video class="real-vid media" src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778506346068-z4mbv.mp4" poster="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778506340392-z4l2r.jpg" controls playsinline style="display:none"></video>
+          </div>
+      </div>
+      <div class="row">
+        <h2 class="title">🔥 ‼️SNAPGOD FULL EDITON‼️</h2>
+        <div class="price-col">
+          <span class="old">$40</span>
+          <span class="now">$35</span>
+          <span class="discount">-13%</span>
+        </div>
+      </div>
+      <div class="counters">
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 635</span>
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> 535</span>
+      </div>
+      
+      <p class="desc">&gt;BLACKMAIL VIDEOS ✅ &gt;LEAKED SNAP OF REAL GIRLS ✅ &gt;FULL FOLDER ✅</p>
+      <div class="actions"><a class="btn tg" href="https://t.me/Franceselle" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> <span data-i18n="telegram">Telegram</span></a><a class="btn buy" href="https://t.me/Franceselle" target="_blank" rel="noreferrer" data-buy-base="https://t.me/Franceselle" data-title="%E2%80%BC%EF%B8%8FSNAPGOD%20FULL%20EDITON%E2%80%BC%EF%B8%8F" data-price="35"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span data-i18n="buy">Comprar agora</span></a></div>
+    </article>
+
+    <article class="card">
+      <div class="media-wrap">
+        <span class="badge-video">▶ <span data-i18n="video">Vídeo</span></span>
+        
+          <div class="player" data-player="2">
+            <div class="poster-wrap">
+              <img src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778505571273-jjv5f.jpg" alt="Lizzy and Brother 📂" class="media" />
+              <button class="play-overlay" type="button" aria-label="Reproduzir vídeo" data-i18n-aria="play">
+                <span class="play-btn"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
+              </button>
+            </div>
+            <video class="real-vid media" src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778505578768-a3loh.mp4" poster="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778505571273-jjv5f.jpg" controls playsinline style="display:none"></video>
+          </div>
+      </div>
+      <div class="row">
+        <h2 class="title">🔥 Lizzy and Brother 📂</h2>
+        <div class="price-col">
+          <span class="old">$40</span>
+          <span class="now">$35</span>
+          <span class="discount">-13%</span>
+        </div>
+      </div>
+      <div class="counters">
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 1655</span>
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> 1555</span>
+      </div>
+      
+      <p class="desc">✅BLACKMAIL VIDEOS ✅TRAINING VIDEOS ✅INCEST</p>
+      <div class="actions"><a class="btn tg" href="https://t.me/Franceselle" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> <span data-i18n="telegram">Telegram</span></a><a class="btn buy" href="https://t.me/Franceselle" target="_blank" rel="noreferrer" data-buy-base="https://t.me/Franceselle" data-title="Lizzy%20and%20Brother%20%F0%9F%93%82" data-price="35"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span data-i18n="buy">Comprar agora</span></a></div>
+    </article>
+
+    <article class="card">
+      <div class="media-wrap">
+        <span class="badge-video">▶ <span data-i18n="video">Vídeo</span></span>
+        
+          <div class="player" data-player="3">
+            <div class="poster-wrap">
+              <img src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778505120079-rcz4f.jpg" alt="❤️ Amélia Blonde 📂" class="media" />
+              <button class="play-overlay" type="button" aria-label="Reproduzir vídeo" data-i18n-aria="play">
+                <span class="play-btn"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
+              </button>
+            </div>
+            <video class="real-vid media" src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778505133393-bgtqt.mp4" poster="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778505120079-rcz4f.jpg" controls playsinline style="display:none"></video>
+          </div>
+      </div>
+      <div class="row">
+        <h2 class="title">🔥 ❤️ Amélia Blonde 📂</h2>
+        <div class="price-col">
+          <span class="old">$40</span>
+          <span class="now">$35</span>
+          <span class="discount">-13%</span>
+        </div>
+      </div>
+      <div class="counters">
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 600</span>
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> 500</span>
+      </div>
+      
+      <p class="desc">🚨 New Folder Available 🚨 ✅ C🅿️ ✅Snapchat hacking tools ✅Complete folder</p>
+      <div class="actions"><a class="btn tg" href="https://t.me/Franceselle" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> <span data-i18n="telegram">Telegram</span></a><a class="btn buy" href="https://t.me/Franceselle" target="_blank" rel="noreferrer" data-buy-base="https://t.me/Franceselle" data-title="%E2%9D%A4%EF%B8%8F%20Am%C3%A9lia%20Blonde%20%F0%9F%93%82" data-price="35"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span data-i18n="buy">Comprar agora</span></a></div>
+    </article>
+
+    <article class="card">
+      <div class="media-wrap">
+        <span class="badge-video">▶ <span data-i18n="video">Vídeo</span></span>
+        
+          <div class="player" data-player="4">
+            <div class="poster-wrap">
+              <img src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778504786105-hh49k.jpg" alt="New ViP Group" class="media" />
+              <button class="play-overlay" type="button" aria-label="Reproduzir vídeo" data-i18n-aria="play">
+                <span class="play-btn"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
+              </button>
+            </div>
+            <video class="real-vid media" src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778504826355-gzs6d.mp4" poster="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778504786105-hh49k.jpg" controls playsinline style="display:none"></video>
+          </div>
+      </div>
+      <div class="row">
+        <h2 class="title">🔥 New ViP Group</h2>
+        <div class="price-col">
+          <span class="old">$55</span>
+          <span class="now">$35</span>
+          <span class="discount">-36%</span>
+        </div>
+      </div>
+      <div class="counters">
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 1523</span>
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> 1423</span>
+      </div>
+      
+      <p class="desc">⚠️GROUP VIP CP,Rape and incest AVAILABLE ⚠️‼️ ➤ DAILY UPDATES 😈 ➤ +700 videos ➤ LIFETIME ACCESS 😈 ➤  I'M ALWAYS ONLINE! 💬</p>
+      <div class="actions"><a class="btn tg" href="https://t.me/Franceselle" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> <span data-i18n="telegram">Telegram</span></a><a class="btn buy" href="https://t.me/Franceselle" target="_blank" rel="noreferrer" data-buy-base="https://t.me/Franceselle" data-title="New%20ViP%20Group" data-price="35"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span data-i18n="buy">Comprar agora</span></a></div>
+    </article>
+
+    <article class="card">
+      <div class="media-wrap">
+        <span class="badge-video">▶ <span data-i18n="video">Vídeo</span></span>
+        
+          <div class="player" data-player="5">
+            <div class="poster-wrap">
+              <img src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778173242486-qta1j.jpg" alt="Cp 2" class="media" />
+              <button class="play-overlay" type="button" aria-label="Reproduzir vídeo" data-i18n-aria="play">
+                <span class="play-btn"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
+              </button>
+            </div>
+            <video class="real-vid media" src="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778173244927-zpvex.mp4" poster="https://cnnoupymbsbtijmspmto.supabase.co/storage/v1/object/public/product-media/ce954e1d-7501-4657-abbb-aada10d64175/5a4563d0-45eb-430c-a02c-4aee4651c734/1778173242486-qta1j.jpg" controls playsinline style="display:none"></video>
+          </div>
+      </div>
+      <div class="row">
+        <h2 class="title">🔥 Cp 2</h2>
+        <div class="price-col">
+          <span class="old">$65</span>
+          <span class="now">$65</span>
+          
+        </div>
+      </div>
+      <div class="counters">
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 3665</span>
+        <span class="counter"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> 3565</span>
+      </div>
+      
+      <p class="desc">
+</p>
+      <div class="actions"><a class="btn tg" href="https://t.me/Franceselle" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> <span data-i18n="telegram">Telegram</span></a><a class="btn buy" href="https://t.me/Franceselle" target="_blank" rel="noreferrer" data-buy-base="https://t.me/Franceselle" data-title="Cp%202" data-price="65"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span data-i18n="buy">Comprar agora</span></a></div>
+    </article>
+    <p class="powered"><span data-i18n="poweredBy">Desenvolvido por</span> <a href="/">LojaLink</a></p>
+  </main>
+
+<script>
+  const I18N = {"pt":{"empty":"Esta loja ainda não tem produtos.","video":"Vídeo","buy":"Comprar agora","telegram":"Telegram","noImage":"sem imagem","poweredBy":"Desenvolvido por","interestMsg":"Olá, tenho interesse neste produto","price":"Preço","play":"Reproduzir vídeo"},"en":{"empty":"This store has no products yet.","video":"Video","buy":"Buy now","telegram":"Telegram","noImage":"no image","poweredBy":"Powered by","interestMsg":"Hi, I'm interested in this product","price":"Price","play":"Play video"},"de":{"empty":"Dieser Shop hat noch keine Produkte.","video":"Video","buy":"Jetzt kaufen","telegram":"Telegram","noImage":"kein Bild","poweredBy":"Bereitgestellt von","interestMsg":"Hallo, ich interessiere mich für dieses Produkt","price":"Preis","play":"Video abspielen"}};
+  function detectLang() {
+    try { const s = localStorage.getItem("lang"); if (s && I18N[s]) return s; } catch(e){}
+    const n = (navigator.language || "pt").toLowerCase();
+    if (n.startsWith("en")) return "en";
+    if (n.startsWith("de")) return "de";
+    return "pt";
+  }
+  function applyLang(lang) {
+    const dict = I18N[lang] || I18N.pt;
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const k = el.getAttribute("data-i18n");
+      if (dict[k]) el.textContent = dict[k];
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach(el => {
+      const k = el.getAttribute("data-i18n-aria");
+      if (dict[k]) el.setAttribute("aria-label", dict[k]);
+    });
+    document.querySelectorAll(".flag-btn").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+    });
+    // rebuild Telegram buy links with translated message
+    document.querySelectorAll("[data-buy-base]").forEach(a => {
+      const base = a.getAttribute("data-buy-base");
+      const title = decodeURIComponent(a.getAttribute("data-title"));
+      const price = decodeURIComponent(a.getAttribute("data-price"));
+      if (base.indexOf("t.me") !== -1 && base.indexOf("?") === -1) {
+        const msg = encodeURIComponent(dict.interestMsg + ": " + title + "\n" + dict.price + ": $" + price);
+        a.href = base + "?text=" + msg;
+      } else {
+        a.href = base;
+      }
+    });
+    try { localStorage.setItem("lang", lang); } catch(e){}
+  }
+  document.querySelectorAll(".flag-btn").forEach(b => {
+    b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+  });
+  applyLang(detectLang());
+
+  // Video play overlays
+  document.querySelectorAll(".player").forEach(p => {
+    const overlay = p.querySelector(".play-overlay");
+    const real = p.querySelector(".real-vid");
+    const poster = p.querySelector(".poster-wrap");
+    if (!overlay || !real || !poster) return;
+    overlay.addEventListener("click", () => {
+      poster.style.display = "none";
+      real.style.display = "block";
+      try { real.play(); } catch(e){}
+    });
+  });
+</script>
+</body>
+</html>
