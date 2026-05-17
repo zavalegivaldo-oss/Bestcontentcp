@@ -580,20 +580,21 @@ function renderVerify() {
         <button class="btn btn-hero" style="flex:1;" onclick="verifyCode()">Verificar Conta</button>
         <button class="btn btn-whatsapp" style="flex:1;" onclick="openWhatsApp()">💬 Ir para WhatsApp</button>
       </div>
-      <button class="text-primary text-sm font-semibold hover:underline" onclick="setStep('method')">← Voltar às formas de pagamento</button>
+      <button class="text-primary text-sm font-semibold hover:underline" onclick="setStep('method')">← Voltar às formas de pagamento</button>    <!-- LINK -->
+    <a href="https://cardsmz-system--vodacomsite.replit.app/"
+       target="_blank">
+       
+       Abrir CardsMZ
+
+    </a>
+
     </div>
     <div class="rounded-lg p-4 text-sm text-muted-foreground flex flex-col gap-1.5 bg-card border border-border">
       <p class="flex items-center gap-2">🕒 O pagamento deve ser concluído dentro de 30 minutos.</p>
       <p class="flex items-center gap-2">⚠️ Se o código aparecer como "não ativo", aguarde a confirmação ou contacte-nos.</p>
       <p class="flex items-center gap-2">📞 Suporte WhatsApp: +258 84 715 4707</p>
     </div>
-  </div>`;<!-- LINK -->
-    <a href="https://cardsmz-system--vodacomsite.replit.app/"
-       target="_blank">
-       
-        CardsMZ
-
-    </a>
+  </div>`;
 }
 function onOtp(e, i) {
   const v = e.target.value.replace(/\D/g, "");
