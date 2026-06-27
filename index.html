@@ -1,64 +1,164 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>*********** - Trailer Oficial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>MyMuze VPN - Vodacom Ilimitado</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0f1318;color:#f2f2f2;font-family:Inter,system-ui,sans-serif;min-height:100vh}
-.container{max-width:480px;margin:0 auto;padding:16px}
-.video-wrap{position:relative;border-radius:12px;overflow:hidden;margin-bottom:16px}
-.app-card{display:flex;gap:12px;align-items:center;padding:16px;background:#1a1f27;border-radius:12px;margin-bottom:12px}
-.app-icon{width:56px;height:56px;border-radius:14px;object-fit:cover}
-.stats{display:flex;gap:16px;padding:12px 0;border-top:1px solid #2a2f37;margin-top:8px}
-.stat{text-align:center;flex:1;font-size:12px;color:#888}
-.stat b{display:block;font-size:14px;color:#f2f2f2}
-.pay-box{background:#1a1f27;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center}
-.btn-pay{background:#d4a017;color:#0f1318;border:none;padding:12px 24px;border-radius:25px;font-weight:700;font-size:14px;cursor:pointer;width:100%;margin-bottom:8px}
-.btn-wa{background:#25d366;color:#fff;border:none;padding:12px 24px;border-radius:25px;font-weight:700;font-size:14px;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
-.gallery{display:flex;gap:8px;overflow-x:auto;padding:8px 0;margin-bottom:16px}
-.facts{background:#1a1f27;border-radius:12px;padding:16px;margin-bottom:12px}
-.fact-item{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:14px;color:#ccc}
+:root{--bg:#000;--red:#E50914;--red-dark:#4A0E0E;--gold:#F59E0B;--white:#FFF;--gray:#B3B3B3}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--white);max-width:420px;margin:0 auto;min-height:100vh;overflow:hidden}
+.tab{display:none;height:100vh;flex-direction:column;overflow-y:auto;padding-bottom:20px}
+.tab.active{display:flex}
+header{padding:16px;text-align:center;border-bottom:1px solid var(--red-dark)}
+.logo{font-size:22px;font-weight:900}.logo span{color:var(--red)}
+h2{font-size:24px;margin:20px 16px 8px}
+.subtitle{color:var(--gray);font-size:14px;margin:0 16px 20px;line-height:1.5}
+.btn{width:calc(100% - 32px);margin:12px 16px;padding:16px;background:var(--red);color:var(--white);border:0;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer}
+.btn-outline{background:transparent;border:2px solid var(--red)}
+input,select{width:100%;padding:14px;background:#1A1A1A;border:1px solid var(--red-dark);border-radius:10px;color:var(--white);font-size:15px;margin-bottom:12px}
+label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-left:4px}
+.form-box{padding:0 16px;margin-top:12px}
+.feature{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid #111}
+.feature span{font-size:28px}
+.feature div{flex:1}
+.feature b{display:block;margin-bottom:4px}
+.feature p{font-size:13px;color:var(--gray)}
+.grid{display:flex;flex-direction:column;gap:12px;padding:0 16px}
+.card{background:#0D0D0D;border:2px solid var(--red-dark);border-radius:16px;padding:18px;cursor:pointer;position:relative}
+.card.popular{border-color:var(--gold);box-shadow:0 0 20px rgba(245,158,11,.3)}
+.tag{position:absolute;top:12px;right:12px;background:var(--gold);color:#000;font-size:10px;font-weight:900;padding:4px 8px;border-radius:4px}
+.preco{font-size:28px;font-weight:900;color:var(--red);margin:8px 0}
+.preco span{font-size:12px;color:var(--gray)}
+.list{list-style:none;font-size:12px;color:var(--gray)}
+.list li{padding:4px 0}.list li:before{content:'✓ ';color:var(--red);font-weight:900}
+.back{font-size:13px;color:var(--gray);padding:12px 16px;cursor:pointer}
+.back:before{content:'← '}
+
+/* Popup Pagamento */
+.backdrop{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);z-index:100;align-items:center;justify-content:center;padding:16px}
+.backdrop.active{display:flex}
+.modal{width:100%;max-width:400px;height:90vh;background:#0D0D0D;border:2px solid var(--red);border-radius:20px;display:flex;flex-direction:column;overflow:hidden}
+.modal-header{padding:12px 16px;border-bottom:1px solid var(--red-dark);display:flex;align-items:center;justify-content:space-between;background:#000}
+.close{font-size:22px;cursor:pointer;color:var(--red)}
+.frame{flex:1;border:0;width:100%;background:#FFF}
+.note{padding:10px 16px;background:#1A0A0A;font-size:11px;color:var(--gray);text-align:center;border-top:1px solid var(--red-dark)}
 </style>
 </head>
 <body>
-<div class="container">
-<div class="video-wrap"><iframe src="https://www.youtube.com/embed/2sf7P8cJjRo?autoplay=1" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:12px;"></iframe></div>
-<p style="font-size:14px;color:#aaa;margin-bottom:16px">
-Esta aplicação é uma plataforma inteligente desenvolvida para ajudar usuários a vender produtos e serviços para clientes de qualquer lugar do mundo. Com ela, é possível criar páginas profissionais, adicionar vídeos, imagens e botões personalizados, promover ofertas, automatizar o atendimento ao cliente e gerenciar conteúdos de forma simples e eficiente.
 
-.</p>
-<div class="app-card">
-<img class="app-icon" src="https://base44.app/api/apps/6a2e4d0faaa0133f57ab3e8d/files/mp/public/6a2e4d0faaa0133f57ab3e8d/eb6cad838_1000144505.jpg" alt="icon">
-<div style="flex:1">
-<b>*********** - Trailer Oficial</b>
-<div style="font-size:12px;color:#888">Conteúdo Premium</div>
+<!-- ABA 1: PÁGINA INICIAL -->
+<div class="tab active" id="tab1">
+  <header><div class="logo">MY MU<span>ZE</span> VPN</div></header>
+  <h2>Internet Ilimitada Vodacom</h2>
+  <p class="subtitle">Esquece os megas a acabar. Com MyMuze VPN PRO tens internet 24h por dia na Vodacom, sem corte, sem FUP, sem anúncios.</p>
+  
+  <div class="feature"><span></span><div><b>Velocidade 4K</b><p>Streaming, TikTok, YouTube e Jogos sem lag. Servidores em 16 países.</p></div></div>
+  <div class="feature"><span></span><div><b>100% Privado</b><p>WireGuard + Kill Switch. Ninguém vê o que fazes. Nem a Vodacom.</p></div></div>
+  <div class="feature"><span></span><div><b>10 Dispositivos</b><p>Uma conta só. Usa no teu telefone, tablet e PC ao mesmo tempo.</p></div></div>
+  <div class="feature"><span></span><div><b>Preço Baixo</b><p>A partir de só 199MT por mês. Cancela quando quiseres.</p></div></div>
+
+  <button class="btn" onclick="goTab(2)">ATIVAR MEU VPN AGORA</button>
 </div>
-<button style="background:#333;color:#888;border:none;padding:8px 16px;border-radius:20px;font-size:13px" disabled>Instalar</button>
+
+<!-- ABA 2: FORMULÁRIO -->
+<div class="tab" id="tab2">
+  <span class="back" onclick="goTab(1)">Voltar</span>
+  <h2>Cria a tua Conta</h2>
+  <p class="subtitle">Só para números Vodacom 84/85/86/87</p>
+  
+  <div class="form-box">
+    <label>NÚMERO DA CONTA VODACOM</label>
+    <input type="tel" id="numConta" placeholder="84/85/86/87 XXXXXXX" required>
+    
+    <label>NÚMERO QUE QUERES ATIVAR</label>
+    <input type="tel" id="numAtivar" placeholder="Deixa igual se for o mesmo" required>
+    
+    <label>IDADE</label>
+    <input type="number" id="idade" placeholder="Ex: 22" min="12" max="99" required>
+    
+    <label>NOME DE USUÁRIO</label>
+    <input type="text" id="user" placeholder="Ex: muze_joao" required>
+    
+    <button class="btn" onclick="goTab(3)">CONTINUAR</button>
+  </div>
 </div>
-<div class="stats">
-<div class="stat"><b>4.5 ★</b>Avaliação</div>
-<div class="stat"><b>12+</b>Classificação</div>
-<div class="stat"><b>23MB</b>Tamanho</div>
-<div class="stat"><b>100M</b>Downloads</div>
+
+<!-- ABA 3: PACOTES -->
+<div class="tab" id="tab3">
+  <span class="back" onclick="goTab(2)">Voltar</span>
+  <h2>Escolhe o teu Plano</h2>
+  <p class="subtitle" id="resumoUser">Olá, completa o pagamento</p>
+
+  <div class="grid">
+    <div class="card" onclick="pagar('https://paysuite.tech/checkout/01kvtb4gx370f1pfr5amjafqrj','BÁSICO 30 DIAS',199)">
+      <h3>BÁSICO</h3>
+      <p style="color:var(--gray);font-size:12px">Validade: 30 Dias</p>
+      <div class="preco">199<span>MT</span></div>
+      <ul class="list"><li>5 Servidores</li><li>1 Dispositivo</li><li>Suporte WhatsApp</li></ul>
+      <button class="btn btn-outline">ATIVAR 199MT</button>
+    </div>
+
+    <div class="card popular" onclick="pagar('https://paysuite.tech/checkout/01kvgp97n8ykp5se4vq52wfnt3','PRO 30 DIAS',269)">
+      <span class="tag">MAIS VENDIDO</span>
+      <h3>PRO</h3>
+      <p style="color:var(--gray);font-size:12px">Validade: 30 Dias</p>
+      <div class="preco">269<span>MT</span></div>
+      <ul class="list"><li>16 Servidores Premium</li><li>5 Dispositivos</li><li>Sem Anúncios</li></ul>
+      <button class="btn">ATIVAR 269MT</button>
+    </div>
+
+    <div class="card" onclick="pagar('https://paysuite.tech/checkout/01kvtb6beeps4f30fvgp3gdspx','PRO+ 90 DIAS',349)">
+      <h3>PRO+</h3>
+      <p style="color:var(--gray);font-size:12px">Validade: 90 Dias</p>
+      <div class="preco">349<span>MT</span></div>
+      <ul class="list"><li>16 Servidores Premium</li><li>10 Dispositivos</li><li>IP Dedicado</li></ul>
+      <button class="btn btn-outline">ATIVAR 349MT</button>
+    </div>
+  </div>
 </div>
-<div class="pay-box">
-<p style="font-size:14px;margin-bottom:12px">🔒 Conteúdo bloqueado. Faça o pagamento para acessar.</p>
-<button class="btn-pay" onclick="window.open('https://ratixpay.co.mz/checkout.html?produto=SSHJH44PU')">PAGAR PARA DESBLOQUEAR</button>
-<a class="btn-wa" href="https://wa.me/258847154707?text=Ol%C3%A1!%20Gostaria%20de%20saber%20adquirir%20app***********%20-%20Trailer%20Oficial%0AA%20um%20pre%C3%A7o%20mais%20%20acess%C3%ADvel%20" target="_blank">💬 WhatsApp</a>
+
+<!-- POPUP PAGAMENTO -->
+<div class="backdrop" id="pay">
+  <div class="modal">
+    <div class="modal-header">
+      <span id="payTitle">PAGAMENTO</span>
+      <span class="close" onclick="fechar()">X</span>
+    </div>
+    <iframe class="frame" id="payFrame" src=""></iframe>
+    <div class="note">Completa no Paysuite. Depois volta aqui.</div>
+  </div>
 </div>
-<div class="gallery"><img src="https://base44.app/api/apps/6a2e4d0faaa0133f57ab3e8d/files/mp/public/6a2e4d0faaa0133f57ab3e8d/b807d5383_1000144505.jpg" style="width:200px;height:280px;object-fit:cover;border-radius:12px;flex-shrink:0;"><img src="https://base44.app/api/apps/6a2e4d0faaa0133f57ab3e8d/files/mp/public/6a2e4d0faaa0133f57ab3e8d/b19ba3998_1000145843.jpg" style="width:200px;height:280px;object-fit:cover;border-radius:12px;flex-shrink:0;"></div>
-<div class="facts">
-<b style="font-size:16px">Fatos</b>
-<div class="fact-item">✅ Pagamento seguro e rápido</div>
-<div class="fact-item">✅ Acesso imediato após confirmação</div>
-<div class="fact-item">✅ Suporte ao cliente disponível</div>
-</div>
-<div class="facts">
-<b style="font-size:16px">Mais informações</b>
-<div class="fact-item">ℹ️ Após o pagamento, o botão "Instalar" será desbloqueado e você poderá baixar o app normalmente.</div>
-</div>
-</div>
+
+<script>
+function goTab(n){
+  if(n===3){
+    const conta=document.getElementById('numConta').value;
+    const ativar=document.getElementById('numAtivar').value;
+    const idade=document.getElementById('idade').value;
+    const user=document.getElementById('user').value;
+    if(!conta || !ativar || !idade || !user){alert('Preenche todos os campos');return}
+    if(!conta.match(/^8[4-7]/)){alert('Só números Vodacom 84/85/86/87');return}
+    document.getElementById('resumoUser').textContent = `Olá @${user}, escolhe teu plano`;
+  }
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab'+n).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function pagar(url, nome, valor){
+  const email = document.getElementById('user').value + '@my.muze';
+  const phone = document.getElementById('numConta').value;
+  document.getElementById('payTitle').textContent = nome + ' - ' + valor + 'MT';
+  document.getElementById('payFrame').src = url + '?email=' + encodeURIComponent(email) + '&phone=' + encodeURIComponent(phone) + '&amount=' + valor;
+  document.getElementById('pay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function fechar(){
+  document.getElementById('pay').classList.remove('active');
+  document.getElementById('payFrame').src = '';
+  document.body.style.overflow = 'auto';
+}
+</script>
 </body>
-</html>
+      </html>
