@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>MyMuze Digital - Cursos</title>
+<title>MyMuze VPN - Vodacom Ilimitado</title>
 <style>
 :root{--bg:#000;--red:#E50914;--red-dark:#4A0E0E;--gold:#F59E0B;--white:#FFF;--gray:#B3B3B3}
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;-webkit-tap-highlight-color:transparent}
@@ -35,7 +35,7 @@ label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-le
 .back{font-size:13px;color:var(--gray);padding:12px 16px;cursor:pointer}
 .back:before{content:'← '}
 
-/* Popup Checkout */
+/* Popup Pagamento */
 .backdrop{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);z-index:100;align-items:center;justify-content:center;padding:16px}
 .backdrop.active{display:flex}
 .modal{width:100%;max-width:400px;height:90vh;background:#0D0D0D;border:2px solid var(--red);border-radius:20px;display:flex;flex-direction:column;overflow:hidden}
@@ -49,30 +49,30 @@ label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-le
 
 <!-- ABA 1: PÁGINA INICIAL -->
 <div class="tab active" id="tab1">
-  <header><div class="logo">MY MU<span>ZE</span> DIGITAL</div></header>
-  <h2>Aprenda Mundo Digital</h2>
-  <p class="subtitle">👉 Clique no link para mais informações. <br>Tenha acesso ao conteúdo inicial sem custo e conheça o método passo a passo. No final, você poderá obter acesso à nossa aplicação exclusiva com ferramentas e recursos adicionais.</p>
+  <header><div class="logo">MY MU<span>ZE</span> VPN</div></header>
+  <h2>Internet Ilimitada Vodacom</h2>
+  <p class="subtitle">Esquece os megas a acabar. Com MyMuze VPN PRO tens internet 24h por dia na Vodacom, sem corte, sem FUP, sem anúncios.</p>
   
-  <div class="feature"><span>🚀</span><div><b>Começa do Zero</b><p>Conteúdo inicial 100% gratuito. Sem experiência.</p></div></div>
-  <div class="feature"><span>📈</span><div><b>Estratégias Avançadas</b><p>Método passo a passo pra escalar resultados.</p></div></div>
-  <div class="feature"><span>👑</span><div><b>Mentoria Premium</b><p>Acesso à aplicação exclusiva + suporte 1-a-1.</p></div></div>
-  <div class="feature"><span>💰</span><div><b>Preço Acessível</b><p>Planos a partir de só 199MT.</p></div></div>
+  <div class="feature"><span>🚀</span><div><b>Velocidade 4K</b><p>Streaming, TikTok, YouTube e Jogos sem lag. Servidores em 16 países.</p></div></div>
+  <div class="feature"><span>🔒</span><div><b>100% Privado</b><p>WireGuard + Kill Switch. Ninguém vê o que fazes. Nem a Vodacom.</p></div></div>
+  <div class="feature"><span>📱</span><div><b>10 Dispositivos</b><p>Uma conta só. Usa no teu telefone, tablet e PC ao mesmo tempo.</p></div></div>
+  <div class="feature"><span>💰</span><div><b>Preço Baixo</b><p>A partir de só 199MT por mês. Cancela quando quiseres.</p></div></div>
 
-  <button class="btn" onclick="goTab(2)">VER CURSOS AGORA</button>
+  <button class="btn" onclick="goTab(2)">ATIVAR MEU VPN AGORA</button>
 </div>
 
 <!-- ABA 2: FORMULÁRIO -->
 <div class="tab" id="tab2">
   <span class="back" onclick="goTab(1)">Voltar</span>
-  <h2>Cria o teu Acesso</h2>
-  <p class="subtitle">Preenche pra liberar os cursos</p>
+  <h2>Cria a tua Conta</h2>
+  <p class="subtitle">Só para números Vodacom 84/85/86/87</p>
   
   <div class="form-box">
-    <label>NOME COMPLETO</label>
-    <input type="text" id="nome" placeholder="Ex: João Silva" required>
+    <label>NÚMERO DA CONTA VODACOM</label>
+    <input type="tel" id="numConta" placeholder="84/85/86/87 XXXXXXX" required>
     
-    <label>WHATSAPP</label>
-    <input type="tel" id="whats" placeholder="84/85/86/87 XXXXXXX" required>
+    <label>NÚMERO QUE QUERES ATIVAR</label>
+    <input type="tel" id="numAtivar" placeholder="Deixa igual se for o mesmo" required>
     
     <label>IDADE</label>
     <input type="number" id="idade" placeholder="Ex: 22" min="12" max="99" required>
@@ -84,36 +84,36 @@ label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-le
   </div>
 </div>
 
-<!-- ABA 3: PACOTES ESCALEPAY -->
+<!-- ABA 3: PACOTES COM ESCALEPAY -->
 <div class="tab" id="tab3">
   <span class="back" onclick="goTab(2)">Voltar</span>
-  <h2>Escolhe o teu Curso</h2>
+  <h2>Escolhe o teu Plano</h2>
   <p class="subtitle" id="resumoUser">Olá, completa o pagamento</p>
 
   <div class="grid">
-    <div class="card" onclick="pagar('https://checkout.escalepay.com/8344399','CURSO BÁSICO',199)">
-      <h3>🚀 BÁSICO</h3>
-      <p style="color:var(--gray);font-size:12px">Conteúdo Inicial</p>
+    <div class="card" onclick="pagar('https://checkout.escalepay.com/8344399','BÁSICO 30 DIAS',199)">
+      <h3>BÁSICO</h3>
+      <p style="color:var(--gray);font-size:12px">Validade: 30 Dias</p>
       <div class="preco">199<span>MT</span></div>
-      <ul class="list"><li>Acesso ao Módulo 1</li><li>Método Passo a Passo</li><li>Suporte WhatsApp</li></ul>
-      <button class="btn btn-outline">ADQUIRIR 199MT</button>
+      <ul class="list"><li>5 Servidores</li><li>1 Dispositivo</li><li>Suporte WhatsApp</li></ul>
+      <button class="btn btn-outline">ATIVAR 199MT</button>
     </div>
 
-    <div class="card popular" onclick="pagar('https://checkout.escalepay.com/1634273','CURSO AVANÇADO',240)">
+    <div class="card popular" onclick="pagar('https://checkout.escalepay.com/1634273','PRO 30 DIAS',240)">
       <span class="tag">MAIS VENDIDO</span>
-      <h3>📈 AVANÇADO</h3>
-      <p style="color:var(--gray);font-size:12px">Resultados Rápidos</p>
+      <h3>PRO</h3>
+      <p style="color:var(--gray);font-size:12px">Validade: 30 Dias</p>
       <div class="preco">240<span>MT</span></div>
-      <ul class="list"><li>Todos os Módulos</li><li>Estratégias de Escala</li><li>Grupo VIP</li></ul>
-      <button class="btn">ADQUIR 240MT</button>
+      <ul class="list"><li>16 Servidores Premium</li><li>5 Dispositivos</li><li>Sem Anúncios</li></ul>
+      <button class="btn">ATIVAR 240MT</button>
     </div>
 
-    <div class="card" onclick="pagar('https://checkout.escalepay.com/4593892','MENTORIA PREMIUM',320)">
-      <h3>👑 PREMIUM</h3>
-      <p style="color:var(--gray);font-size:12px">Acesso Exclusivo</p>
+    <div class="card" onclick="pagar('https://checkout.escalepay.com/4593892','PRO+ 90 DIAS',320)">
+      <h3>PRO+</h3>
+      <p style="color:var(--gray);font-size:12px">Validade: 90 Dias</p>
       <div class="preco">320<span>MT</span></div>
-      <ul class="list"><li>App Exclusiva</li><li>Mentoria 1-a-1</li><li>Ferramentas VIP</li></ul>
-      <button class="btn btn-outline">ADQUIR 320MT</button>
+      <ul class="list"><li>16 Servidores Premium</li><li>10 Dispositivos</li><li>IP Dedicado</li></ul>
+      <button class="btn btn-outline">ATIVAR 320MT</button>
     </div>
   </div>
 </div>
@@ -133,13 +133,13 @@ label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-le
 <script>
 function goTab(n){
   if(n===3){
-    const nome=document.getElementById('nome').value;
-    const whats=document.getElementById('whats').value;
+    const conta=document.getElementById('numConta').value;
+    const ativar=document.getElementById('numAtivar').value;
     const idade=document.getElementById('idade').value;
     const user=document.getElementById('user').value;
-    if(!nome || !whats || !idade || !user){alert('Preenche todos os campos');return}
-    if(!whats.match(/^8[4-7]/)){alert('Só números 84/85/86/87');return}
-    document.getElementById('resumoUser').textContent = `Olá @${user}, escolhe teu curso`;
+    if(!conta || !ativar || !idade || !user){alert('Preenche todos os campos');return}
+    if(!conta.match(/^8[4-7]/)){alert('Só números Vodacom 84/85/86/87');return}
+    document.getElementById('resumoUser').textContent = `Olá @${user}, escolhe teu plano`;
   }
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab'+n).classList.add('active');
@@ -147,10 +147,8 @@ function goTab(n){
 }
 
 function pagar(url, nome, valor){
-  const email = document.getElementById('user').value + '@my.muze';
-  const phone = document.getElementById('whats').value;
   document.getElementById('payTitle').textContent = nome + ' - ' + valor + 'MT';
-  document.getElementById('payFrame').src = url; // Escalepay já pega os dados
+  document.getElementById('payFrame').src = url; // Só abre o link Escalepay direto
   document.getElementById('pay').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
@@ -161,4 +159,4 @@ function fechar(){
 }
 </script>
 </body>
-                                             </html>
+                                      </html>
