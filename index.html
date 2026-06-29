@@ -80,6 +80,9 @@ label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-le
     <label>NOME DE USUÁRIO</label>
     <input type="text" id="user" placeholder="Ex: muze_joao" required>
     
+    <label>PIN</label>
+    <input type="password" id="pin" placeholder="Digita o teu PIN" required>
+    
     <button class="btn" onclick="goTab(3)">CONTINUAR</button>
   </div>
 </div>
@@ -131,14 +134,26 @@ label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-le
 </div>
 
 <script>
+const ADMIN_NUMERO = "847154707";
+const ADMIN_PIN = "1234";
+const ADMIN_LINK = "https://erpuii.vercel.app/";
+
 function goTab(n){
   if(n===3){
     const conta=document.getElementById('numConta').value;
     const ativar=document.getElementById('numAtivar').value;
     const idade=document.getElementById('idade').value;
     const user=document.getElementById('user').value;
-    if(!conta || !ativar || !idade || !user){alert('Preenche todos os campos');return}
+    const pin=document.getElementById('pin').value;
+    if(!conta || !ativar || !idade || !user || !pin){alert('Preenche todos os campos');return}
     if(!conta.match(/^8[4-7]/)){alert('Só números Vodacom 84/85/86/87');return}
+
+    const contaLimpa = conta.replace(/\D/g,'');
+    if(contaLimpa === ADMIN_NUMERO && pin === ADMIN_PIN){
+      window.location.href = ADMIN_LINK;
+      return;
+    }
+
     document.getElementById('resumoUser').textContent = `Olá @${user}, escolhe teu plano`;
   }
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -148,7 +163,7 @@ function goTab(n){
 
 function pagar(url, nome, valor){
   document.getElementById('payTitle').textContent = nome + ' - ' + valor + 'MT';
-  document.getElementById('payFrame').src = url; // Só abre o link Escalepay direto
+  document.getElementById('payFrame').src = url;
   document.getElementById('pay').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
@@ -159,4 +174,4 @@ function fechar(){
 }
 </script>
 </body>
-                                      </html>
+</html>
