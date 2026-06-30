@@ -3,284 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>MY MUZE VPN</title>
+<title>MyMuze VPN - Vodacom Ilimitado</title>
 <style>
-:root{--bg:#000;--card:#1A0A0A;--red:#E50914;--red-dark:#4A0E0E;--green:#10B981;--white:#FFF}
+:root{--bg:#000;--red:#E50914;--red-dark:#4A0E0E;--gold:#F59E0B;--white:#FFF;--gray:#B3B3B3}
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--white);max-width:420px;margin:0 auto;height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#0D0D0D;position:relative;z-index:5}
-.logo-box{background:#000;padding:6px 10px;border-radius:4px;border-bottom:3px solid var(--red)}
-.logo{font-size:24px;font-weight:900;letter-spacing:1px;line-height:1}
-.logo .red-dot{color:var(--red);font-size:28px;line-height:0}
-.logo-sub{font-size:9px;color:var(--white);margin-top:2px}
-.menu{width:28px;display:flex;flex-direction:column;gap:4px;cursor:pointer}
-.menu span{height:3px;background:var(--white);border-radius:2px}
-.screen{flex:1;overflow-y:auto;padding:16px 16px 60px}
-.top-select{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
-.select-card{background:var(--card);border-radius:14px;padding:12px 14px;border:1px solid var(--red-dark)}
-.select-card label{font-size:11px;color:#B3B3B3;letter-spacing:1px;font-weight:700}
-.select-card .val{font-size:16px;color:var(--red);font-weight:900;margin-top:4px}
-.status{display:flex;align-items:center;justify-content:center;gap:8px;font-weight:900;font-size:14px;margin-bottom:16px}
-.status-dot{width:12px;height:12px;border-radius:50%;background:#555}
-.status.connected .status-dot{background:var(--green)}
-.status.connecting .status-dot{background:var(--red);animation:blink 1s infinite}
-.status.error{color:var(--red)}
-.status.error .status-dot{background:var(--red)}
-@keyframes blink{50%{opacity:.3}}
+body{background:var(--bg);color:var(--white);max-width:420px;margin:0 auto;min-height:100vh;overflow:hidden}
+.tab{display:none;height:100vh;flex-direction:column;overflow-y:auto;padding-bottom:20px}
+.tab.active{display:flex}
+header{padding:16px;text-align:center;border-bottom:1px solid var(--red-dark)}
+.logo{font-size:22px;font-weight:900}.logo span{color:var(--red)}
+h2{font-size:24px;margin:20px 16px 8px}
+.subtitle{color:var(--gray);font-size:14px;margin:0 16px 20px;line-height:1.5}
+.btn{width:calc(100% - 32px);margin:12px 16px;padding:16px;background:var(--red);color:var(--white);border:0;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer}
+.btn-outline{background:transparent;border:2px solid var(--red)}
+input,select{width:100%;padding:14px;background:#1A1A1A;border:1px solid var(--red-dark);border-radius:10px;color:var(--white);font-size:15px;margin-bottom:12px}
+label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-left:4px}
+.form-box{padding:0 16px;margin-top:12px}
+.feature{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid #111}
+.feature span{font-size:28px}
+.feature div{flex:1}
+.feature b{display:block;margin-bottom:4px}
+.feature p{font-size:13px;color:var(--gray)}
+.grid{display:flex;flex-direction:column;gap:12px;padding:0 16px}
+.card{background:#0D0D0D;border:2px solid var(--red-dark);border-radius:16px;padding:18px;cursor:pointer;position:relative}
+.card.popular{border-color:var(--gold);box-shadow:0 0 20px rgba(245,158,11,.3)}
+.tag{position:absolute;top:12px;right:12px;background:var(--gold);color:#000;font-size:10px;font-weight:900;padding:4px 8px;border-radius:4px}
+.preco{font-size:28px;font-weight:900;color:var(--red);margin:8px 0}
+.preco span{font-size:12px;color:var(--gray)}
+.list{list-style:none;font-size:12px;color:var(--gray)}
+.list li{padding:4px 0}.list li:before{content:'✓ ';color:var(--red);font-weight:900}
+.back{font-size:13px;color:var(--gray);padding:12px 16px;cursor:pointer}
+.back:before{content:'← '}
 
-.btn-wrap{width:200px;height:200px;margin:0 auto 24px;position:relative}
-.btn-circle{width:200px;height:200px;border-radius:50%;position:absolute;top:0;left:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:var(--white);cursor:pointer;background:#1A1A1A;box-shadow:inset 0 0 0 8px #000;text-align:center;padding:0 20px}
-.btn-circle::before{content:'';position:absolute;width:160px;height:160px;border-radius:50%;background:#000;z-index:1}
-.btn-circle span{position:relative;z-index:2}
-.progress{position:absolute;top:0;left:0;width:200px;height:200px;transform:rotate(-90deg);z-index:3;pointer-events:none}
-.progress circle{fill:none;stroke-width:8;stroke-linecap:round}
-.progress .bg{stroke:#1A1A1A}
-.progress .bar{stroke:var(--red);stroke-dasharray:565;stroke-dashoffset:565;transition:stroke-dashoffset .1s linear}
-.progress.connected .bar{stroke:var(--green)}
-
-.stats-2{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:16px}
-.stat-box{background:var(--card);border:2px solid var(--red-dark);border-radius:14px;padding:16px;text-align:center}
-.stat-box .arrow{font-size:24px;color:var(--red);line-height:1;margin-bottom:4px}
-.stat-box.down .arrow{transform:rotate(180deg)}
-.stat-box .val{font-size:32px;font-weight:900;line-height:1}
-.stat-box .unit{font-size:12px;color:#B3B3B3;margin-left:2px}
-.stat-box .lbl{font-size:11px;color:#B3B3B3;margin-top:4px;font-weight:700}
-.refresh-btn{width:56px;height:56px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;cursor:pointer}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.card{background:var(--card);border-radius:14px;padding:14px;border:1px solid var(--red-dark)}
-.card label{font-size:11px;color:#B3B3B3;font-weight:700;letter-spacing:.5px}
-.card .val{font-size:20px;font-weight:900;margin-top:4px}
-.banner{position:fixed;bottom:0;left:0;right:0;max-width:420px;margin:0 auto;background:var(--red);padding:14px;text-align:center;font-weight:900;font-size:12px;letter-spacing:1px;z-index:5}
-
-/* Side drawer */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .25s;z-index:10}
-.overlay.open{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;height:100%;width:78%;max-width:320px;background:#0D0D0D;border-left:2px solid var(--red-dark);transform:translateX(100%);transition:transform .3s ease;z-index:11;display:flex;flex-direction:column}
-.drawer.open{transform:translateX(0)}
-.drawer-head{padding:18px 16px;border-bottom:1px solid var(--red-dark);display:flex;align-items:center;justify-content:space-between}
-.drawer-head .title{font-size:14px;font-weight:900;letter-spacing:1px;color:var(--red)}
-.close-x{font-size:24px;cursor:pointer;color:var(--white);line-height:1}
-.drawer-body{padding:12px 0;flex:1;overflow-y:auto}
-.drawer-item{padding:16px 20px;display:flex;align-items:center;gap:12px;font-size:15px;font-weight:700;cursor:pointer;border-bottom:1px solid #1a1a1a;color:var(--white)}
-.drawer-item:hover{background:#1A0A0A}
-.drawer-item .ico{font-size:20px;color:var(--red);width:24px;text-align:center}
-.drawer-item.highlight{background:linear-gradient(90deg,var(--red-dark),transparent);color:var(--white)}
-.drawer-foot{padding:14px 16px;border-top:1px solid var(--red-dark);font-size:10px;color:#777;text-align:center}
-
-/* Modal */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}
-.modal-overlay.open{display:flex}
-.modal{background:#1A0A0A;border:2px solid var(--red);border-radius:16px;padding:24px 20px;max-width:340px;width:100%;text-align:center;animation:pop .2s ease}
-@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-.modal .ico-big{font-size:48px;margin-bottom:10px}
-.modal h3{font-size:18px;font-weight:900;margin-bottom:8px;color:var(--red)}
-.modal p{font-size:13px;color:#ddd;line-height:1.5;margin-bottom:18px}
-.modal .strong{color:var(--white);font-weight:900}
-.modal-btn{display:block;width:100%;padding:14px;border-radius:10px;background:var(--red);color:var(--white);font-weight:900;font-size:14px;text-decoration:none;border:none;cursor:pointer;letter-spacing:.5px;margin-bottom:8px}
-.modal-btn.ghost{background:transparent;border:1px solid #444;color:#bbb}
+/* Popup Pagamento */
+.backdrop{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);z-index:100;align-items:center;justify-content:center;padding:16px}
+.backdrop.active{display:flex}
+.modal{width:100%;max-width:400px;height:90vh;background:#0D0D0D;border:2px solid var(--red);border-radius:20px;display:flex;flex-direction:column;overflow:hidden}
+.modal-header{padding:12px 16px;border-bottom:1px solid var(--red-dark);display:flex;align-items:center;justify-content:space-between;background:#000}
+.close{font-size:22px;cursor:pointer;color:var(--red)}
+.frame{flex:1;border:0;width:100%;background:#FFF}
+.note{padding:10px 16px;background:#1A0A0A;font-size:11px;color:var(--gray);text-align:center;border-top:1px solid var(--red-dark)}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo-box">
-    <div class="logo">MY MU<span class="red-dot">Z</span>E</div>
-    <div class="logo-sub">só na Vodacom</div>
-  </div>
-  <div class="menu" onclick="openDrawer()"><span></span><span></span><span></span></div>
-</header>
+<!-- ABA 1: PÁGINA INICIAL -->
+<div class="tab active" id="tab1">
+  <header><div class="logo">MY MU<span>ZE</span> VPN</div></header>
+  <h2>Internet Ilimitada Vodacom</h2>
+  <p class="subtitle">Esquece os megas a acabar. Com MyMuze VPN PRO tens internet 24h por dia na Vodacom, sem corte, sem FUP, sem anúncios.</p>
+  
+  <div class="feature"><span>🚀</span><div><b>Velocidade 4K</b><p>Streaming, TikTok, YouTube e Jogos sem lag. Servidores em 16 países.</p></div></div>
+  <div class="feature"><span>🔒</span><div><b>100% Privado</b><p>WireGuard + Kill Switch. Ninguém vê o que fazes. Nem a Vodacom.</p></div></div>
+  <div class="feature"><span>📱</span><div><b>10 Dispositivos</b><p>Uma conta só. Usa no teu telefone, tablet e PC ao mesmo tempo.</p></div></div>
+  <div class="feature"><span>💰</span><div><b>Preço Baixo</b><p>A partir de só 199MT por mês. Cancela quando quiseres.</p></div></div>
 
-<div class="screen">
-  <div class="top-select">
-    <div class="select-card"><label>SERVICO</label><div class="val">Streaming</div></div>
-    <div class="select-card"><label>PAIS</label><div class="val">Moçambique</div></div>
-  </div>
+  <button class="btn" onclick="goTab(2)">ATIVAR MEU VPN AGORA</button>
+</div>
 
-  <div class="status" id="statusRow"><div class="status-dot"></div> DESCONECTADO</div>
-
-  <div class="btn-wrap">
-    <svg class="progress" id="progress">
-      <circle class="bg" cx="100" cy="100" r="90"></circle>
-      <circle class="bar" id="bar" cx="100" cy="100" r="90"></circle>
-    </svg>
-    <div class="btn-circle" id="btnCircle" onclick="toggle()"><span id="btnTxt">CONECTAR</span></div>
-  </div>
-
-  <div class="stats-2">
-    <div class="stat-box down">
-      <div class="arrow">↓</div>
-      <div><span class="val" id="downVal">0</span><span class="unit" id="downUnit">KB</span></div>
-      <div class="lbl">DOWNLOAD</div>
-    </div>
-    <div class="refresh-btn" onclick="reset()">↻</div>
-    <div class="stat-box up">
-      <div class="arrow">↑</div>
-      <div><span class="val" id="upVal">0</span><span class="unit" id="upUnit">KB</span></div>
-      <div class="lbl">UPLOAD</div>
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card"><label>TEMPO</label><div class="val" id="tempo">00:00:00</div></div>
-    <div class="card"><label>PING</label><div class="val" id="ping">-- ms</div></div>
-  </div>
-  <div class="grid-2">
-    <div class="card"><label>IP ATUAL</label><div class="val" id="ip">192.168.1.1</div></div>
-    <div class="card"><label>IP VPN</label><div class="val" id="ipvpn">--.--</div></div>
+<!-- ABA 2: FORMULÁRIO -->
+<div class="tab" id="tab2">
+  <span class="back" onclick="goTab(1)">Voltar</span>
+  <h2>Cria a tua Conta</h2>
+  <p class="subtitle">Só para números Vodacom 84/85/86/87</p>
+  
+  <div class="form-box">
+    <label>NÚMERO DA CONTA VODACOM</label>
+    <input type="tel" id="numConta" placeholder="84/85/86/87 XXXXXXX" required>
+    
+    <label>NÚMERO QUE QUERES ATIVAR</label>
+    <input type="tel" id="numAtivar" placeholder="Deixa igual se for o mesmo" required>
+    
+    <label>IDADE</label>
+    <input type="number" id="idade" placeholder="Ex: 22" min="12" max="99" required>
+    
+    <label>NOME DE USUÁRIO</label>
+    <input type="text" id="user" placeholder="Ex: muze_joao" required>
+    
+    <label>PIN</label>
+    <input type="password" id="pin" placeholder="Digita o teu PIN" required>
+    
+    <button class="btn" onclick="goTab(3)">CONTINUAR</button>
   </div>
 </div>
 
-<div class="banner">PLANO PRO • MENSAL • ATIVADO</div>
+<!-- ABA 3: PACOTES COM ESCALEPAY -->
+<div class="tab" id="tab3">
+  <span class="back" onclick="goTab(2)">Voltar</span>
+  <h2>Escolhe o teu Plano</h2>
+  <p class="subtitle" id="resumoUser">Olá, completa o pagamento</p>
 
-<!-- Drawer -->
-<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
-<aside class="drawer" id="drawer">
-  <div class="drawer-head">
-    <div class="title">MENU</div>
-    <div class="close-x" onclick="closeDrawer()">✕</div>
-  </div>
-  <div class="drawer-body">
-    <div class="drawer-item"><span class="ico">⚙️</span> Configurações</div>
-    <div class="drawer-item"><span class="ico">🌐</span> Servidores</div>
-    <div class="drawer-item"><span class="ico">📊</span> Estatísticas</div>
-    <div class="drawer-item highlight" onclick="goRegister()"><span class="ico">📝</span> Fazer o meu registo</div>
-    <div class="drawer-item"><span class="ico">💎</span> Plano Premium</div>
-    <div class="drawer-item"><span class="ico">❓</span> Ajuda & Suporte</div>
-    <div class="drawer-item"><span class="ico">ℹ️</span> Sobre</div>
-  </div>
-  <div class="drawer-foot">MY MUZE VPN v2.4.1</div>
-</aside>
+  <div class="grid">
+    <div class="card" onclick="pagar('https://checkout.escalepay.com/8344399','BÁSICO 30 DIAS',199)">
+      <h3>BÁSICO</h3>
+      <p style="color:var(--gray);font-size:12px">Validade: 30 Dias</p>
+      <div class="preco">199<span>MT</span></div>
+      <ul class="list"><li>5 Servidores</li><li>1 Dispositivo</li><li>Suporte WhatsApp</li></ul>
+      <button class="btn btn-outline">ATIVAR 199MT</button>
+    </div>
 
-<!-- Error / Register modal -->
-<div class="modal-overlay" id="modal">
-  <div class="modal" id="modalBody"></div>
+    <div class="card popular" onclick="pagar('https://checkout.escalepay.com/1634273','PRO 30 DIAS',240)">
+      <span class="tag">MAIS VENDIDO</span>
+      <h3>PRO</h3>
+      <p style="color:var(--gray);font-size:12px">Validade: 30 Dias</p>
+      <div class="preco">240<span>MT</span></div>
+      <ul class="list"><li>16 Servidores Premium</li><li>5 Dispositivos</li><li>Sem Anúncios</li></ul>
+      <button class="btn">ATIVAR 240MT</button>
+    </div>
+
+    <div class="card" onclick="pagar('https://checkout.escalepay.com/4593892','PRO+ 90 DIAS',320)">
+      <h3>PRO+</h3>
+      <p style="color:var(--gray);font-size:12px">Validade: 90 Dias</p>
+      <div class="preco">320<span>MT</span></div>
+      <ul class="list"><li>16 Servidores Premium</li><li>10 Dispositivos</li><li>IP Dedicado</li></ul>
+      <button class="btn btn-outline">ATIVAR 320MT</button>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP CHECKOUT ESCALEPAY -->
+<div class="backdrop" id="pay">
+  <div class="modal">
+    <div class="modal-header">
+      <span id="payTitle">PAGAMENTO</span>
+      <span class="close" onclick="fechar()">X</span>
+    </div>
+    <iframe class="frame" id="payFrame" src=""></iframe>
+    <div class="note">Completa no Escalepay. Depois volta aqui.</div>
+  </div>
 </div>
 
 <script>
-const CIRC=565;
-let estado='desconectado';
-let seg=0,downKB=0,upKB=0,loopT,connectT;
-let tentativas=0;
+const ADMIN_NUMERO = "847154707";
+const ADMIN_PIN = "1234";
+const ADMIN_LINK = "https://erpuii.vercel.app/";
 
-function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('open')}
-function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('open')}
+function goTab(n){
+  if(n===3){
+    const conta=document.getElementById('numConta').value;
+    const ativar=document.getElementById('numAtivar').value;
+    const idade=document.getElementById('idade').value;
+    const user=document.getElementById('user').value;
+    const pin=document.getElementById('pin').value;
+    if(!conta || !ativar || !idade || !user || !pin){alert('Preenche todos os campos');return}
+    if(!conta.match(/^8[4-7]/)){alert('Só números Vodacom 84/85/86/87');return}
 
-function toggle(){
-  if(estado==='conectando')return;
-  if(estado==='desconectado'){conectar()}
-  else if(estado==='conectado'){desconectar()}
-}
-
-function conectar(){
-  tentativas++;
-  estado='conectando';
-  document.getElementById('btnTxt').textContent='CONECTANDO';
-  document.getElementById('statusRow').className='status connecting';
-  document.getElementById('statusRow').innerHTML='<div class="status-dot"></div> CONECTANDO';
-  document.getElementById('progress').classList.remove('connected');
-  document.getElementById('bar').style.strokeDashoffset=CIRC;
-
-  let p=0;
-  // 1ª e 2ª tentativa: erro a 65%. 3ª: abre modal de registo
-  const falhar = tentativas<=2;
-  const limite = falhar?65:50;
-
-  connectT=setInterval(()=>{
-    p+=2;
-    document.getElementById('bar').style.strokeDashoffset=CIRC-(CIRC*p/100);
-
-    if(falhar && p>=limite){
-      clearInterval(connectT);
-      falharConexao();
+    const contaLimpa = conta.replace(/\D/g,'');
+    if(contaLimpa === ADMIN_NUMERO && pin === ADMIN_PIN){
+      window.location.href = ADMIN_LINK;
       return;
     }
-    if(!falhar && p>=limite){
-      clearInterval(connectT);
-      mostrarRegisto();
-      return;
-    }
-  },50);
+
+    document.getElementById('resumoUser').textContent = `Olá @${user}, escolhe teu plano`;
+  }
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab'+n).classList.add('active');
+  window.scrollTo(0,0);
 }
 
-function falharConexao(){
-  estado='desconectado';
-  document.getElementById('bar').style.strokeDashoffset=CIRC;
-  document.getElementById('btnCircle').style.background='#1A1A1A';
-  document.getElementById('btnTxt').textContent='CONECTAR';
-  document.getElementById('statusRow').className='status error';
-  document.getElementById('statusRow').innerHTML='<div class="status-dot"></div> FALHA NA CONEXÃO';
-  document.getElementById('modalBody').innerHTML=`
-    <div class="ico-big">⚠️</div>
-    <h3>Erro de Conexão</h3>
-    <p>Não foi possível conectar ao servidor VPN.<br><span class="strong">Tentativa ${tentativas} de 3</span></p>
-    <button class="modal-btn" onclick="fecharModal()">Tentar Novamente</button>
-  `;
-  document.getElementById('modal').classList.add('open');
+function pagar(url, nome, valor){
+  document.getElementById('payTitle').textContent = nome + ' - ' + valor + 'MT';
+  document.getElementById('payFrame').src = url;
+  document.getElementById('pay').classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
-
-function mostrarRegisto(){
-  estado='desconectado';
-  document.getElementById('bar').style.strokeDashoffset=CIRC;
-  document.getElementById('btnCircle').style.background='#1A1A1A';
-  document.getElementById('btnTxt').textContent='CONECTAR';
-  document.getElementById('statusRow').className='status error';
-  document.getElementById('statusRow').innerHTML='<div class="status-dot"></div> NÚMERO NÃO REGISTRADO';
-  document.getElementById('modalBody').innerHTML=`
-    <div class="ico-big">📵</div>
-    <h3>Número não registrado</h3>
-    <p>O seu número <span class="strong">não está registrado</span> no sistema MY MUZE VPN.<br>Faça o seu registo agora para continuar a usar o serviço.</p>
-    <button class="modal-btn" onclick="goRegister()">REFAZER SEU REGISTRO</button>
-    <button class="modal-btn ghost" onclick="fecharModal()">Mais tarde</button>
-  `;
-  document.getElementById('modal').classList.add('open');
-}
-
-function fecharModal(){document.getElementById('modal').classList.remove('open')}
-
-function goRegister(){
-  window.location.href='https://bestcontentcp-sooty.vercel.app';
-}
-
-function desconectar(){
-  clearInterval(loopT);clearInterval(connectT);
-  estado='desconectado';
-  document.getElementById('progress').classList.remove('connected');
-  document.getElementById('bar').style.strokeDashoffset=CIRC;
-  document.getElementById('btnCircle').style.background='#1A1A1A';
-  document.getElementById('btnTxt').textContent='CONECTAR';
-  document.getElementById('statusRow').className='status';
-  document.getElementById('statusRow').innerHTML='<div class="status-dot"></div> DESCONECTADO';
-  document.getElementById('ipvpn').textContent='--.--';
-  document.getElementById('ping').textContent='-- ms';
-}
-
-function formatKB(kb){if(kb>=1024)return [(kb/1024).toFixed(1),'MB'];return [Math.floor(kb),'KB']}
-
-function iniciarContadores(){
-  loopT=setInterval(()=>{
-    seg++;
-    const h=String(Math.floor(seg/3600)).padStart(2,'0');
-    const m=String(Math.floor(seg%3600/60)).padStart(2,'0');
-    const s=String(seg%60).padStart(2,'0');
-    document.getElementById('tempo').textContent=`${h}:${m}:${s}`;
-    downKB+=Math.random()*150+50;
-    upKB+=Math.random()*30+10;
-    const [dVal,dUnit]=formatKB(downKB);
-    const [uVal,uUnit]=formatKB(upKB);
-    document.getElementById('downVal').textContent=dVal;
-    document.getElementById('downUnit').textContent=dUnit;
-    document.getElementById('upVal').textContent=uVal;
-    document.getElementById('upUnit').textContent=uUnit;
-  },1000);
-}
-
-function reset(){
-  seg=0;downKB=0;upKB=0;
-  document.getElementById('tempo').textContent='00:00:00';
-  document.getElementById('downVal').textContent='0';
-  document.getElementById('downUnit').textContent='KB';
-  document.getElementById('upVal').textContent='0';
-  document.getElementById('upUnit').textContent='KB';
+function fechar(){
+  document.getElementById('pay').classList.remove('active');
+  document.getElementById('payFrame').src = '';
+  document.body.style.overflow = 'auto';
 }
 </script>
 </body>
