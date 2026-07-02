@@ -53,10 +53,10 @@ label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-le
   <h2>Internet Ilimitada Vodacom</h2>
   <p class="subtitle">Esquece os megas a acabar. Com MyMuze VPN PRO tens internet 24h por dia na Vodacom, sem corte, sem FUP, sem anúncios.</p>
   
-  <div class="feature"><span>🚀</span><div><b>Velocidade 4K</b><p>Streaming, TikTok, YouTube e Jogos sem lag. Servidores em 16 países.</p></div></div>
-  <div class="feature"><span>🔒</span><div><b>100% Privado</b><p>WireGuard + Kill Switch. Ninguém vê o que fazes. Nem a Vodacom.</p></div></div>
-  <div class="feature"><span>📱</span><div><b>10 Dispositivos</b><p>Uma conta só. Usa no teu telefone, tablet e PC ao mesmo tempo.</p></div></div>
-  <div class="feature"><span>💰</span><div><b>Preço Baixo</b><p>A partir de só 199MT por mês. Cancela quando quiseres.</p></div></div>
+  <div class="feature"><span></span><div><b>Velocidade 4K</b><p>Streaming, TikTok, YouTube e Jogos sem lag. Servidores em 16 países.</p></div></div>
+  <div class="feature"><span></span><div><b>100% Privado</b><p>WireGuard + Kill Switch. Ninguém vê o que fazes. Nem a Vodacom.</p></div></div>
+  <div class="feature"><span></span><div><b>10 Dispositivos</b><p>Uma conta só. Usa no teu telefone, tablet e PC ao mesmo tempo.</p></div></div>
+  <div class="feature"><span></span><div><b>Preço Baixo</b><p>A partir de só 199MT por mês. Cancela quando quiseres.</p></div></div>
 
   <button class="btn" onclick="goTab(2)">ATIVAR MEU VPN AGORA</button>
 </div>
@@ -94,7 +94,7 @@ label{font-size:12px;color:var(--gray);margin-bottom:6px;display:block;margin-le
   <p class="subtitle" id="resumoUser">Olá, completa o pagamento</p>
 
   <div class="grid">
-    <div class="card" onclick="pagar('https://checkout.escalepay.com/8344399','BÁSICO 30 DIAS',199)">
+    <div class="card" onclick="pagar('https://checkout.escalepay.com/4673145','BÁSICO 30 DIAS',199)">
       <h3>BÁSICO</h3>
       <p style="color:var(--gray);font-size:12px">Validade: 30 Dias</p>
       <div class="preco">199<span>MT</span></div>
