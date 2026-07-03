@@ -1,116 +1,94 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-MZ">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyMuse VPN - Manutenção</title>
-
+<title>My Moose VPN - Atualização</title>
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-background:#0d0d0d;
-color:#fff;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-padding:20px;
-}
-
-.container{
-max-width:700px;
-width:100%;
-background:#171717;
-padding:40px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 0 40px rgba(0,0,0,.6);
-border:1px solid #2a2a2a;
-}
-
-.logo{
-font-size:48px;
-font-weight:bold;
-color:#4da3ff;
-margin-bottom:20px;
-}
-
-.status{
-display:inline-block;
-padding:8px 18px;
-background:#ff9800;
-border-radius:30px;
-font-weight:bold;
-margin-bottom:25px;
-}
-
-h1{
-font-size:30px;
-margin-bottom:15px;
-}
-
-p{
-font-size:17px;
-line-height:1.7;
-color:#cfcfcf;
-margin-bottom:30px;
-}
-
-button{
-padding:15px 35px;
-font-size:17px;
-border:none;
-border-radius:12px;
-background:#4da3ff;
-color:white;
-cursor:pointer;
-transition:.3s;
-}
-
-button:hover{
-background:#2c84e8;
-transform:scale(1.05);
-}
-
-.footer{
-margin-top:35px;
-color:#888;
-font-size:14px;
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+  body {
+    background: linear-gradient(to bottom, #8B0000 0%, #000 100%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  .container {
+    width: 100%;
+    max-width: 400px;
+  }
+  h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 30px;
+  }
+  .btn-atualizar {
+    width: 100%;
+    padding: 16px;
+    background: #E60000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .btn-atualizar:hover {
+    background: #cc0000;
+    transform: scale(1.02);
+  }
+  .btn-atualizar:disabled {
+    background: #555;
+    color: #999;
+    cursor: not-allowed;
+  }
+  .aviso {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #00ff64;
+    font-weight: bold;
+    display: none;
+  }
 </style>
-
 </head>
 <body>
+  <div class="container">
+    <h1>Estamos em atualização</h1>
+    <p>
+      Por favor, aguarde.<br>
+      Aguarde a renovação do<br>
+      <strong>My Muze VPN</strong>
+    </p>
 
-<div class="container">
+    <button class="btn-atualizar" id="btn">Atualizar</button>
+    
+    <div class="aviso" id="aviso">Aguarde 24 horas pela atualização</div>
+  </div>
 
-<div class="logo">MyMuse VPN</div>
+<script>
+  const btn = document.getElementById('btn');
+  const aviso = document.getElementById('aviso');
 
-<div class="status">EM MANUTENÇÃO</div>
-
-<h1>Estamos realizando melhorias</h1>
-
-<p>
-Infelizmente nosso sistema sofreu uma interrupção e estamos trabalhando para restaurar todos os serviços o mais rápido possível.
-<br><br>
-Não se preocupe. Assim que a manutenção for concluída, você receberá uma notificação e poderá voltar a utilizar o aplicativo normalmente.
-</p>
-
-<button onclick="location.reload()">
-Verificar novamente
-</button>
-
-<div class="footer">
-© 2026 MyMuse VPN • Todos os direitos reservados.
-</div>
-
-</div>
-
+  btn.addEventListener('click', () => {
+    btn.disabled = true;
+    btn.innerText = "Aguarde...";
+    aviso.style.display = "block";
+    
+    // Esconde o botão depois de clicar
+    setTimeout(() => {
+      btn.style.display = "none";
+    }, 2000);
+  });
+</script>
 </body>
-  </html>
+</html>
