@@ -1,94 +1,420 @@
 <!DOCTYPE html>
-<html lang="pt-MZ">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Moose VPN - Atualização</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>MY MUZE VPN</title>
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
-  body {
-    background: linear-gradient(to bottom, #8B0000 0%, #000 100%);
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-  }
-  .container {
-    width: 100%;
-    max-width: 400px;
-  }
-  h1 {
-    font-size: 26px;
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
-  p {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #ccc;
-    margin-bottom: 30px;
-  }
-  .btn-atualizar {
-    width: 100%;
-    padding: 16px;
-    background: #E60000;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  .btn-atualizar:hover {
-    background: #cc0000;
-    transform: scale(1.02);
-  }
-  .btn-atualizar:disabled {
-    background: #555;
-    color: #999;
-    cursor: not-allowed;
-  }
-  .aviso {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #00ff64;
-    font-weight: bold;
-    display: none;
-  }
+:root{--bg:#000;--card:#1A0A0A;--red:#E50914;--red-dark:#4A0E0E;--green:#10B981;--white:#FFF}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--white);max-width:420px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative;overflow-x:hidden}
+header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#0D0D0D;position:relative;z-index:5}
+.logo-box{background:#000;padding:6px 10px;border-radius:4px;border-bottom:3px solid var(--red)}
+.logo{font-size:24px;font-weight:900;letter-spacing:1px;line-height:1}
+.logo .red-dot{color:var(--red);font-size:28px;line-height:0}
+.logo-sub{font-size:9px;color:var(--white);margin-top:2px}
+.menu{width:28px;display:flex;flex-direction:column;gap:4px;cursor:pointer}
+.menu span{height:3px;background:var(--white);border-radius:2px}
+.screen{flex:1;overflow-y:auto;padding:16px 16px 80px}
+.top-select{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.select-card{background:var(--card);border-radius:14px;padding:12px 14px;border:1px solid var(--red-dark);cursor:pointer}
+.select-card label{font-size:11px;color:#B3B3B3;letter-spacing:1px;font-weight:700}
+.select-card .val{font-size:16px;color:var(--red);font-weight:900;margin-top:4px}
+.status{display:flex;align-items:center;justify-content:center;gap:8px;font-weight:900;font-size:14px;margin-bottom:16px;text-align:center;min-height:20px}
+.status-dot{width:12px;height:12px;border-radius:50%;background:#555;flex-shrink:0}
+.status.connected{color:var(--green)}
+.status.connected .status-dot{background:var(--green)}
+.status.connecting .status-dot{background:var(--red);animation:blink 1s infinite}
+.status.error{color:var(--red)}
+.status.error .status-dot{background:var(--red)}
+@keyframes blink{50%{opacity:.3}}
+.btn-wrap{width:200px;height:200px;margin:0 auto 24px;position:relative}
+.btn-circle{width:200px;height:200px;border-radius:50%;position:absolute;top:0;left:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:var(--white);cursor:pointer;background:#1A1A1A;box-shadow:inset 0 0 0 8px #000;text-align:center;padding:0 20px}
+.btn-circle::before{content:'';position:absolute;width:160px;height:160px;border-radius:50%;background:#000;z-index:1}
+.btn-circle span{position:relative;z-index:2}
+.progress{position:absolute;top:0;left:0;width:200px;height:200px;transform:rotate(-90deg);z-index:3;pointer-events:none}
+.progress circle{fill:none;stroke-width:8;stroke-linecap:round}
+.progress .bg{stroke:#1A1A1A}
+.progress .bar{stroke:var(--red);stroke-dasharray:565;stroke-dashoffset:565;transition:stroke-dashoffset .1s linear}
+.progress.connected .bar{stroke:var(--green)}
+.stats-2{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:16px}
+.stat-box{background:var(--card);border:2px solid var(--red-dark);border-radius:14px;padding:16px;text-align:center}
+.stat-box .arrow{font-size:24px;color:var(--red);line-height:1;margin-bottom:4px}
+.stat-box.down .arrow{transform:rotate(180deg)}
+.stat-box .val{font-size:32px;font-weight:900;line-height:1}
+.stat-box .unit{font-size:12px;color:#B3B3B3;margin-left:2px}
+.stat-box .lbl{font-size:11px;color:#B3B3B3;margin-top:4px;font-weight:700}
+.refresh-btn{width:56px;height:56px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;cursor:pointer}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.card{background:var(--card);border-radius:14px;padding:14px;border:1px solid var(--red-dark)}
+.card label{font-size:11px;color:#B3B3B3;font-weight:700;letter-spacing:.5px}
+.card .val{font-size:20px;font-weight:900;margin-top:4px}
+.banner{position:fixed;bottom:0;left:0;right:0;max-width:420px;margin:0 auto;background:var(--red);padding:14px;text-align:center;font-weight:900;font-size:12px;letter-spacing:1px;z-index:5}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .25s;z-index:10}
+.overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:78%;max-width:320px;background:#0D0D0D;border-left:2px solid var(--red-dark);transform:translateX(100%);transition:transform .3s ease;z-index:11;display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.drawer-head{padding:18px 16px;border-bottom:1px solid var(--red-dark);display:flex;align-items:center;justify-content:space-between}
+.drawer-head .title{font-size:14px;font-weight:900;letter-spacing:1px;color:var(--red)}
+.close-x{font-size:24px;cursor:pointer;color:var(--white);line-height:1}
+.drawer-body{padding:12px 0;flex:1;overflow-y:auto}
+.drawer-item{padding:16px 20px;display:flex;align-items:center;gap:14px;font-size:14px;font-weight:700;cursor:pointer;border-bottom:1px solid #1a1a1a;color:var(--white);letter-spacing:.3px}
+.drawer-item:hover{background:#1A0A0A}
+.drawer-item .ico{font-size:13px;color:var(--red);width:24px;text-align:center;font-weight:900;letter-spacing:0;border:1px solid var(--red-dark);border-radius:4px;padding:3px 4px;line-height:1.2;font-family:monospace}
+.drawer-item.highlight{background:linear-gradient(90deg,var(--red-dark),transparent);color:var(--white)}
+.drawer-foot{padding:14px 16px;border-top:1px solid var(--red-dark);font-size:10px;color:#777;text-align:center}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#1A0A0A;border:2px solid var(--red);border-radius:16px;padding:24px 20px;max-width:340px;width:100%;text-align:center;animation:pop .2s ease;max-height:90vh;overflow-y:auto}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modal .ico-big{font-size:48px;margin-bottom:10px}
+.modal h3{font-size:18px;font-weight:900;margin-bottom:8px;color:var(--red)}
+.modal p{font-size:13px;color:#ddd;line-height:1.5;margin-bottom:18px}
+.modal .strong{color:var(--white);font-weight:900}
+.modal-btn{display:block;width:100%;padding:14px;border-radius:10px;background:var(--red);color:var(--white);font-weight:900;font-size:14px;text-decoration:none;border:none;cursor:pointer;letter-spacing:.5px;margin-bottom:8px}
+.modal-btn.ghost{background:transparent;border:1px solid #444;color:#bbb}
+.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .25s;z-index:15}
+.sheet-overlay.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;bottom:0;left:0;right:0;max-width:420px;margin:0 auto;background:#0D0D0D;border-top:2px solid var(--red);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .35s ease;z-index:16;max-height:92vh;overflow-y:auto;padding:20px}
+.sheet.open{transform:translateY(0)}
+.sheet-handle{width:50px;height:5px;background:#333;border-radius:3px;margin:0 auto 16px}
+.sheet h2{color:var(--red);font-size:18px;font-weight:900;margin-bottom:6px;text-align:center;letter-spacing:.5px}
+.sheet .sub{font-size:12px;color:#999;text-align:center;margin-bottom:20px}
+.sheet .field{margin-bottom:14px}
+.sheet .field label{display:block;font-size:11px;color:#B3B3B3;font-weight:700;letter-spacing:1px;margin-bottom:6px}
+.sheet .field input{width:100%;background:#1A0A0A;border:1px solid var(--red-dark);color:var(--white);padding:14px;border-radius:10px;font-size:16px;font-weight:700;outline:none}
+.sheet .field input:focus{border-color:var(--red)}
+.primary-btn{width:100%;padding:15px;background:var(--red);color:#fff;font-weight:900;font-size:15px;border:none;border-radius:10px;cursor:pointer;letter-spacing:1px;margin-top:6px}
+.plan{background:#1A0A0A;border:2px solid var(--red-dark);border-radius:14px;padding:16px;margin-bottom:12px}
+.plan.featured{border-color:var(--red);background:linear-gradient(180deg,#2a0a0a,#1A0A0A)}
+.plan-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.plan-name{font-weight:900;font-size:16px;color:var(--white)}
+.plan-price{font-weight:900;font-size:20px;color:var(--red)}
+.plan ul{list-style:none;padding:0;margin:0 0 12px 0}
+.plan ul li{font-size:12px;color:#bbb;padding:3px 0;padding-left:16px;position:relative}
+.plan ul li::before{content:'✓';color:var(--green);position:absolute;left:0;font-weight:900}
+.plan-btn{width:100%;padding:12px;background:var(--red);color:#fff;font-weight:900;border:none;border-radius:8px;cursor:pointer;letter-spacing:1px;font-size:13px}
+.checkout-frame{width:100%;height:65vh;border:none;border-radius:10px;background:#fff}
+.country-list,.server-list{max-height:60vh;overflow-y:auto}
+.country-item{padding:14px;background:#1A0A0A;border:1px solid var(--red-dark);border-radius:10px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:12px;font-weight:700}
+.country-item.active{border-color:var(--red);background:#2a0a0a}
+.first-notice{position:fixed;inset:0;background:#000;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px}
+.first-notice .box{background:#1A0A0A;border:2px solid var(--red);border-radius:16px;padding:28px 22px;max-width:360px;width:100%;text-align:center}
+.first-notice h2{color:var(--red);font-size:20px;font-weight:900;margin-bottom:14px}
+.first-notice p{font-size:13px;color:#ddd;line-height:1.6;margin-bottom:12px}
+.first-notice .warn{background:#000;border-left:3px solid var(--red);padding:10px;font-size:12px;color:#ffb;text-align:left;margin:14px 0;border-radius:4px}
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Estamos em atualização</h1>
-    <p>
-      Por favor, aguarde.<br>
-      Aguarde a renovação do<br>
-      <strong>My Muze VPN</strong>
-    </p>
 
-    <button class="btn-atualizar" id="btn">Atualizar</button>
-    
-    <div class="aviso" id="aviso">Aguarde 24 horas pela atualização</div>
+<div class="first-notice" id="firstNotice" style="display:none">
+  <div class="box">
+    <div style="font-size:42px;margin-bottom:8px">📢</div>
+    <h2>AVISO IMPORTANTE</h2>
+    <p>Neste aplicativo você pode encontrar <strong>anúncios educacionais</strong> — conteúdos sobre educação, formação académica, materiais escolares e serviços de ensino.</p>
+    <p style="font-size:13px;color:#ccc;line-height:1.6">Estes anúncios têm como objectivo promover a educação e o acesso ao conhecimento.</p>
+    <div class="warn">Apenas o <strong>Plano Mensal (199 MT)</strong> exibe anúncios educacionais. Os demais planos são completamente livres de anúncios.</div>
+    <button class="modal-btn" onclick="closeNotice()">CONTINUAR</button>
+  </div>
+</div>
+
+<header>
+  <div class="logo-box">
+    <div class="logo">MY MU<span class="red-dot">Z</span>E</div>
+    <div class="logo-sub">só na Vodacom</div>
+  </div>
+  <div class="menu" onclick="openDrawer()"><span></span><span></span><span></span></div>
+</header>
+
+<div class="screen">
+  <div class="top-select">
+    <div class="select-card" onclick="openServers()"><label>SERVIDOR</label><div class="val" id="servidorLabel">Maputo 01</div></div>
+    <div class="select-card" onclick="openCountries()"><label>PAÍS</label><div class="val" id="paisLabel">Moçambique</div></div>
   </div>
 
-<script>
-  const btn = document.getElementById('btn');
-  const aviso = document.getElementById('aviso');
+  <div class="status" id="statusRow"><div class="status-dot"></div> <span id="statusTxt">DESCONECTADO</span></div>
 
-  btn.addEventListener('click', () => {
-    btn.disabled = true;
-    btn.innerText = "Aguarde...";
-    aviso.style.display = "block";
-    
-    // Esconde o botão depois de clicar
-    setTimeout(() => {
-      btn.style.display = "none";
-    }, 2000);
+  <div class="btn-wrap">
+    <svg class="progress" id="progress" viewBox="0 0 200 200">
+      <circle class="bg" cx="100" cy="100" r="90"></circle>
+      <circle class="bar" id="bar" cx="100" cy="100" r="90"></circle>
+    </svg>
+    <div class="btn-circle" id="btnCircle" onclick="toggle()"><span id="btnTxt">CONECTAR</span></div>
+  </div>
+
+  <div class="stats-2">
+    <div class="stat-box down">
+      <div class="arrow">↓</div>
+      <div><span class="val" id="downVal">0</span><span class="unit" id="downUnit">KB</span></div>
+      <div class="lbl">DOWNLOAD</div>
+    </div>
+    <div class="refresh-btn" onclick="reset()">↻</div>
+    <div class="stat-box up">
+      <div class="arrow">↑</div>
+      <div><span class="val" id="upVal">0</span><span class="unit" id="upUnit">KB</span></div>
+      <div class="lbl">UPLOAD</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card"><label>TEMPO</label><div class="val" id="tempo">00:00:00</div></div>
+    <div class="card"><label>PING</label><div class="val" id="ping">-- ms</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><label>IP ATUAL</label><div class="val" id="ip">192.168.1.1</div></div>
+    <div class="card"><label>IP VPN</label><div class="val" id="ipvpn">--.--</div></div>
+  </div>
+</div>
+
+<div class="banner" id="banner">SEM PLANO ATIVO • REGISTE-SE</div>
+
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div class="title">MENU</div>
+    <div class="close-x" onclick="closeDrawer()">✕</div>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-item"><span class="ico">CFG</span> Configurações</div>
+    <div class="drawer-item" onclick="closeDrawer();openCountries()"><span class="ico">NET</span> Países</div>
+    <div class="drawer-item" onclick="closeDrawer();openServers()"><span class="ico">SRV</span> Servidores</div>
+    <div class="drawer-item"><span class="ico">EST</span> Estatísticas</div>
+    <div class="drawer-item highlight" onclick="closeDrawer();openRegister()"><span class="ico">REG</span> Fazer o meu registo</div>
+    <div class="drawer-item" onclick="closeDrawer();openPlans()"><span class="ico">PRO</span> Plano Premium</div>
+    <div class="drawer-item"><span class="ico">SUP</span> Ajuda &amp; Suporte</div>
+    <div class="drawer-item"><span class="ico">INF</span> Sobre</div>
+  </div>
+  <div class="drawer-foot">MY MUZE VPN v2.4.1</div>
+</aside>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div id="sheetContent"></div>
+</div>
+
+<script>
+const SPECIAL_NUMBER='845646041';
+const CHECKOUTS={
+  mensal:'https://checkout.escalepay.com/2064220',
+  familia:'https://checkout.escalepay.com/7637289',
+  premium:'https://checkout.escalepay.com/1584444'
+};
+const COUNTRIES={
+  mz:{name:'Moçambique',servers:['Maputo 01 ⭐','Maputo 02','Beira 01','Nampula 01']},
+  za:{name:'África do Sul',servers:['Johannesburg 01','Cape Town 01','Durban 01','Pretoria 01']},
+  gh:{name:'Gana',servers:['Accra 01','Accra 02','Kumasi 01','Tema 01']},
+  ug:{name:'Uganda',servers:['Kampala 01','Kampala 02','Entebbe 01','Gulu 01']}
+};
+const CIRC=565;
+let estado='desconectado';
+let seg=0,downKB=0,upKB=0,loopT,connectT;
+let user=JSON.parse(localStorage.getItem('mmv_user')||'null');
+let selectedCountry='mz',selectedServer=COUNTRIES.mz.servers[0];
+
+if(!localStorage.getItem('mmv_seen_notice'))document.getElementById('firstNotice').style.display='flex';
+function closeNotice(){localStorage.setItem('mmv_seen_notice','1');document.getElementById('firstNotice').style.display='none'}
+
+function updateBanner(){
+  const b=document.getElementById('banner');
+  if(user&&user.special){
+    b.textContent='CONTA APROVADA • ACESSO LIBERADO';
+  }else if(user&&user.approved){
+    const plans={mensal:'MENSAL',familia:'FAMÍLIA',premium:'PREMIUM'};
+    b.textContent=`PLANO ${plans[user.plan]||'ATIVO'} • ATIVADO`;
+  }else if(user&&!user.approved){
+    b.textContent='AGUARDANDO APROVAÇÃO DA NOSSA EQUIPE';
+  }else{
+    b.textContent='SEM PLANO ATIVO • REGISTE-SE';
+  }
+}
+updateBanner();
+
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('open')}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('open')}
+function openSheet(html){document.getElementById('sheetContent').innerHTML=html;document.getElementById('sheet').classList.add('open');document.getElementById('sheetOverlay').classList.add('open')}
+function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('sheetOverlay').classList.remove('open')}
+function showModal(html){document.getElementById('modalBody').innerHTML=html;document.getElementById('modal').classList.add('open')}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+
+function openCountries(){
+  let html='<h2>ESCOLHER PAÍS</h2><div class="sub">Selecione o seu país</div><div class="country-list">';
+  Object.entries(COUNTRIES).forEach(([k,c])=>{
+    html+=`<div class="country-item ${k===selectedCountry?'active':''}" onclick="selectCountry('${k}')">${c.name}</div>`;
   });
+  html+='</div>';openSheet(html);
+}
+function selectCountry(k){
+  selectedCountry=k;selectedServer=COUNTRIES[k].servers[0];
+  document.getElementById('paisLabel').textContent=COUNTRIES[k].name;
+  document.getElementById('servidorLabel').textContent=selectedServer;
+  closeSheet();
+}
+function openServers(){
+  let html='<h2>ESCOLHER SERVIDOR</h2><div class="sub">'+COUNTRIES[selectedCountry].name+'</div><div class="server-list">';
+  COUNTRIES[selectedCountry].servers.forEach(s=>{
+    html+=`<div class="country-item ${s===selectedServer?'active':''}" onclick="selectServer('${s.replace(/'/g,"\\'")}')">🖥️ ${s}</div>`;
+  });
+  html+='</div>';openSheet(html);
+}
+function selectServer(s){selectedServer=s;document.getElementById('servidorLabel').textContent=s;closeSheet()}
+
+function openRegister(){
+  openSheet(`
+    <h2>REGISTRE SUA CONTA</h2>
+    <div class="sub">Introduza os seus dados para continuar</div>
+    <div class="field"><label>NÚMERO</label><input type="tel" id="regNumber" placeholder="84 000 0000" inputmode="numeric"></div>
+    <div class="field"><label>PIN</label><input type="password" id="regPin" placeholder="••••" inputmode="numeric" maxlength="6"></div>
+    <button class="primary-btn" onclick="confirmRegister()">CONFIRMAR</button>
+  `);
+}
+function confirmRegister(){
+  const num=(document.getElementById('regNumber').value||'').replace(/\D/g,'');
+  const pin=(document.getElementById('regPin').value||'').trim();
+  if(!num||!pin){alert('Preencha número e PIN');return}
+
+  if(num===SPECIAL_NUMBER){
+    user={number:num,pin,plan:'premium',approved:true,special:true};
+    localStorage.setItem('mmv_user',JSON.stringify(user));
+    updateBanner();
+    closeSheet();
+    showModal(`<div class="ico-big">✅</div><h3>Conta Aprovada</h3><p>Número <span class="strong">${num}</span> encontrado e aprovado no sistema.<br>Pode avançar para a ligação.</p><button class="modal-btn" onclick="closeModal()">CONTINUAR</button>`);
+    return;
+  }
+
+  user={number:num,pin,plan:null,approved:false,special:false};
+  localStorage.setItem('mmv_user',JSON.stringify(user));
+  closeSheet();
+  showModal(`<div class="ico-big">✅</div><h3>Utilizador Encontrado</h3><p>Número <span class="strong">${num}</span> encontrado no sistema.<br>Selecione um plano para activar o acesso.</p><button class="modal-btn" onclick="closeModal();openPlans()">VER PLANOS</button><button class="modal-btn ghost" onclick="closeModal()">Fechar</button>`);
+}
+
+function openPlans(){
+  openSheet(`
+    <h2>ESCOLHA O SEU PLANO</h2>
+    <div class="sub">Selecione a assinatura ideal para si</div>
+    <div class="plan">
+      <div class="plan-head"><div class="plan-name">Plano Mensal</div><div class="plan-price">199 MT</div></div>
+      <ul><li>30 dias de acesso</li><li>1 dispositivo</li><li>Contém anúncios educativos</li></ul>
+      <button class="plan-btn" onclick="openCheckout('mensal')">ASSINAR</button>
+    </div>
+    <div class="plan featured">
+      <div class="plan-head"><div class="plan-name">Plano Família</div><div class="plan-price">350 MT</div></div>
+      <ul><li>60 dias de acesso</li><li>2 dispositivos</li><li>Sem anúncios</li></ul>
+      <button class="plan-btn" onclick="openCheckout('familia')">ASSINAR</button>
+    </div>
+    <div class="plan featured">
+      <div class="plan-head"><div class="plan-name">Plano Premium</div><div class="plan-price">1500 MT</div></div>
+      <ul><li>90 dias de acesso</li><li>5 dispositivos</li><li>Sem anúncios</li><li>Prioridade nos servidores</li></ul>
+      <button class="plan-btn" onclick="openCheckout('premium')">ASSINAR</button>
+    </div>
+  `);
+}
+
+function openCheckout(planKey){
+  const url=CHECKOUTS[planKey];
+  if(user){user.plan=planKey;localStorage.setItem('mmv_user',JSON.stringify(user))}
+  openSheet(`
+    <h2>PAGAMENTO</h2>
+    <div class="sub">Complete o pagamento abaixo</div>
+    <iframe src="${url}" class="checkout-frame" allow="payment"></iframe>
+    <button class="primary-btn" style="background:transparent;border:1px solid #444;color:#bbb;margin-top:12px" onclick="closeSheet()">Cancelar</button>
+  `);
+}
+
+function toggle(){
+  if(estado==='conectando')return;
+  if(estado==='conectado'){desconectar();return}
+  conectar();
+}
+function conectar(){
+  estado='conectando';
+  document.getElementById('btnTxt').textContent='CONECTANDO';
+  const sr=document.getElementById('statusRow');
+  sr.className='status connecting';
+  document.getElementById('statusTxt').textContent='CONECTANDO...';
+  document.getElementById('progress').classList.remove('connected');
+  document.getElementById('bar').style.strokeDashoffset=CIRC;
+
+  let p=0;
+  const isSpecial=user&&user.special;
+  const phases=isSpecial
+    ?['A verificar conta...','Conta encontrada...','A localizar cartão...']
+    :['Verificando número...','Validando assinatura...','Aguardando servidor...'];
+
+  document.getElementById('statusTxt').textContent=phases[0];
+
+  connectT=setInterval(()=>{
+    p+=2;
+    document.getElementById('bar').style.strokeDashoffset=CIRC-(CIRC*p/100);
+    if(p===20)document.getElementById('statusTxt').textContent=phases[1];
+    if(p===38)document.getElementById('statusTxt').textContent=phases[2];
+    if(p>=50){
+      clearInterval(connectT);
+      if(isSpecial){
+        erroContaEspecial();
+      }else{
+        semConexao();
+      }
+    }
+  },60);
+}
+function erroContaEspecial(){
+  estado='desconectado';
+  document.getElementById('bar').style.strokeDashoffset=CIRC;
+  document.getElementById('btnCircle').style.background='#1A1A1A';
+  document.getElementById('btnTxt').textContent='CONECTAR';
+  const sr=document.getElementById('statusRow');
+  sr.className='status error';
+  document.getElementById('statusTxt').textContent='NÚMERO NÃO ENCONTRADO';
+  showModal(`
+    <div class="ico-big">⚠️</div>
+    <h3>Número da conta não encontrado</h3>
+    <p>Por favor, insira o número da conta no dispositivo para conectar.<br><br>O número <span class="strong">${user&&user.number?user.number:''}</span> que acabou de adicionar não foi detectado neste telefone. Insira o cartão com esse número para estabelecer ligação.</p>
+    <button class="modal-btn" onclick="closeModal()">OK</button>
+  `);
+}
+function semConexao(){
+  estado='desconectado';
+  document.getElementById('bar').style.strokeDashoffset=CIRC;
+  document.getElementById('btnCircle').style.background='#1A1A1A';
+  document.getElementById('btnTxt').textContent='CONECTAR';
+  const sr=document.getElementById('statusRow');
+  sr.className='status error';
+  document.getElementById('statusTxt').textContent='CARTÃO NÃO ENCONTRADO';
+  showModal(`
+    <div class="ico-big">⚠️</div>
+    <h3>Cartão ou servidor não encontrado</h3>
+    <p>Por favor, insira o cartão que registou a conta no telefone.<br><br>O número registado na conta <span class="strong">não foi encontrado neste dispositivo</span>. Certifique-se de que o cartão SIM correcto está inserido.</p>
+    <button class="modal-btn" onclick="closeModal()">TENTAR NOVAMENTE</button>
+    <button class="modal-btn ghost" onclick="closeModal();openRegister()">REGISTAR OUTRA CONTA</button>
+  `);
+}
+function desconectar(){
+  clearInterval(loopT);clearInterval(connectT);
+  estado='desconectado';
+  document.getElementById('progress').classList.remove('connected');
+  document.getElementById('bar').style.strokeDashoffset=CIRC;
+  document.getElementById('btnCircle').style.background='#1A1A1A';
+  document.getElementById('btnTxt').textContent='CONECTAR';
+  const sr=document.getElementById('statusRow');
+  sr.className='status';
+  document.getElementById('statusTxt').textContent='DESCONECTADO';
+  document.getElementById('ipvpn').textContent='--.--';
+  document.getElementById('ping').textContent='-- ms';
+}
+function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function reset(){
+  seg=0;downKB=0;upKB=0;
+  document.getElementById('tempo').textContent='00:00:00';
+  document.getElementById('downVal').textContent='0';
+  document.getElementById('downUnit').textContent='KB';
+  document.getElementById('upVal').textContent='0';
+  document.getElementById('upUnit').textContent='KB';
+}
 </script>
 </body>
-</html>
+       </html>
