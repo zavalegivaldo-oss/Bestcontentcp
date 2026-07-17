@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status</title>
+<style>
+  :root{
+    --bg:#05060c;
+    --panel:#0c0e1c;
+    --panel-border:#1e2a52;
+    --blue:#2f6bff;
+    --blue-light:#5b8bff;
+    --text-dim:#7b86ab;
+    --text:#f3f5ff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:radial-gradient(circle at 50% 30%, #0a0f22 0%, #05060c 65%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    padding:24px;
+  }
+  .card{
+    width:100%;
+    max-width:380px;
+    border:1px solid var(--panel-border);
+    background:var(--panel);
+    border-radius:16px;
+    padding:36px 28px;
+    text-align:center;
+  }
+  .dot-pulse{
+    width:12px; height:12px; border-radius:50%;
+    background:var(--blue-light);
+    margin:0 auto 20px;
+    animation:pulse 1.1s infinite ease-in-out;
+    box-shadow:0 0 16px rgba(91,139,255,0.6);
+  }
+  @keyframes pulse{
+    0%,100%{opacity:.4; transform:scale(.85);}
+    50%{opacity:1; transform:scale(1.15);}
+  }
+  .title{
+    font-size:20px;
+    font-weight:800;
+    color:var(--text);
+    letter-spacing:.5px;
+    margin-bottom:8px;
+  }
+  .sub{
+    font-size:13px;
+    color:var(--text-dim);
+    letter-spacing:.5px;
+    line-height:1.6;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="dot-pulse"></div>
+    <div class="title">Ainda pendente</div>
+    <div class="sub">Em processamento, em análise da nossa equipe.</div>
+  </div>
+</body>
+</html>
